@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>Web Unit Converter - PX/REM変換 & アスペクト比計算ツール | Creators Box</title>
+    <meta name="description" content="レスポンシブ対応に必須。PX⇔REM変換とアスペクト比計算が瞬時にできるブラウザ完結型ツール。Webデザイナー・コーダー向け。">
+    <meta name="keywords" content="PX REM 変換, アスペクト比計算, レスポンシブデザイン, CSS単位変換, Web制作ツール">
+    <meta name="author" content="Creators Box">
+
+    <!-- OGP Tags -->
+    <meta property="og:title" content="Web Unit Converter - PX/REM & アスペクト比計算">
+    <meta property="og:description" content="レスポンシブ対応のためのPX/REM変換とアスペクト比計算ツール">
+    <meta property="og:type" content="website">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="../" class="site-name">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Creators Box
+                </a>
+                <h1 class="tool-name">Web Unit Converter</h1>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Section 1: PX/REM Converter -->
+            <section class="converter-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                            <path d="M14 4V24M14 4L8 10M14 4L20 10M4 14H24M4 14L10 8M4 14L10 20" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        PX ⇔ REM 変換
+                    </h2>
+                    <p class="section-description">基準フォントサイズを元に、pxとremを相互変換します</p>
+                </div>
+
+                <div class="calculator-card">
+                    <div class="input-group">
+                        <label for="baseSize" class="input-label">
+                            基準フォントサイズ (Base Size)
+                            <span class="label-hint">通常は16px</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="baseSize" class="input-field" value="16" min="1" step="1">
+                            <span class="input-unit">px</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="pixelValue" class="input-label">
+                            ピクセル値 (Pixels)
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="pixelValue" class="input-field" placeholder="例: 24" min="0"
+                                step="0.1">
+                            <span class="input-unit">px</span>
+                        </div>
+                    </div>
+
+                    <div class="results-grid">
+                        <div class="result-item" data-copy="rem">
+                            <span class="result-label">REM</span>
+                            <span class="result-value" id="remResult">-</span>
+                            <span class="copy-hint">クリックでコピー</span>
+                        </div>
+                        <div class="result-item" data-copy="em">
+                            <span class="result-label">EM</span>
+                            <span class="result-value" id="emResult">-</span>
+                            <span class="copy-hint">クリックでコピー</span>
+                        </div>
+                        <div class="result-item" data-copy="percent">
+                            <span class="result-label">%</span>
+                            <span class="result-value" id="percentResult">-</span>
+                            <span class="copy-hint">クリックでコピー</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Aspect Ratio Calculator -->
+            <section class="converter-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                            <rect x="3" y="6" width="22" height="16" rx="2" stroke="currentColor" stroke-width="2"
+                                fill="none" />
+                            <path d="M3 10H25" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                        アスペクト比 計算
+                    </h2>
+                    <p class="section-description">幅と高さから比率とCSS用のpadding値を算出します</p>
+                </div>
+
+                <div class="calculator-card">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="aspectWidth" class="input-label">幅 (Width)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="aspectWidth" class="input-field" placeholder="例: 1920" min="1"
+                                    step="1">
+                                <span class="input-unit">px</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="aspectHeight" class="input-label">高さ (Height)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="aspectHeight" class="input-field" placeholder="例: 1080" min="1"
+                                    step="1">
+                                <span class="input-unit">px</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="results-grid">
+                        <div class="result-item" data-copy="ratio">
+                            <span class="result-label">比率 (Ratio)</span>
+                            <span class="result-value" id="ratioResult">-</span>
+                            <span class="copy-hint">クリックでコピー</span>
+                        </div>
+                        <div class="result-item" data-copy="padding">
+                            <span class="result-label">CSS padding-top</span>
+                            <span class="result-value" id="paddingResult">-</span>
+                            <span class="copy-hint">クリックでコピー</span>
+                        </div>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">CSS例</span>
+                            <button class="copy-code-btn" id="copyCssBtn">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <rect x="5" y="5" width="9" height="9" rx="1" stroke="currentColor"
+                                        stroke-width="1.5" fill="none" />
+                                    <path d="M3 11V3C3 2.44772 3.44772 2 4 2H10" stroke="currentColor"
+                                        stroke-width="1.5" />
+                                </svg>
+                                コピー
+                            </button>
+                        </div>
+                        <pre class="code-block" id="cssCode">.aspect-box {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+}</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Article Section (SEO & AdSense) -->
+            <article class="article-section">
+                <h2 class="article-title">レスポンシブデザインに必須の知識</h2>
+
+                <section class="article-block">
+                    <h3 class="article-subtitle">なぜREMを使うべきか？（アクセシビリティ）</h3>
+                    <p class="article-text">
+                        REM（Root
+                        EM）は、ルート要素（html）のフォントサイズを基準とする相対単位です。ユーザーがブラウザのフォントサイズを変更した際、PXで固定されたサイズは変わりませんが、REMは柔軟に追従します。これにより、視覚障害のあるユーザーや高齢者など、大きな文字を必要とする方々にとって読みやすいサイトを提供できます。WCAG（Web
+                        Content Accessibility
+                        Guidelines）でも、アクセシビリティ向上のため相対単位の使用が推奨されています。また、デザインシステムにおいても一貫性のある余白・サイズ管理が可能になります。
+                    </p>
+                </section>
+
+                <section class="article-block">
+                    <h3 class="article-subtitle">アスペクト比の重要性（CLS対策）</h3>
+                    <p class="article-text">
+                        アスペクト比（縦横比）を正しく設定することは、CLS（Cumulative Layout
+                        Shift）の改善に直結します。CLSはGoogleのCore Web
+                        Vitalsの一つで、ページ読み込み中のレイアウトのズレを測定します。画像や動画を読み込む際、事前にpadding-topで高さを確保しておくことで、コンテンツが突然移動してユーザー体験を損なうことを防ぎます。例えば、16:9の動画であれば`padding-top:
+                        56.25%`を設定することで、実際のコンテンツが読み込まれる前からスペースが確保され、スムーズな閲覧が可能になります。これはSEOにも好影響を与えます。
+                    </p>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-copy">&copy; 2025 Creators Box</p>
+                <nav class="footer-links">
+                    <a href="../" class="footer-link">ホーム</a>
+                    <a href="../privacy.html" class="footer-link">プライバシーポリシー</a>
+                </nav>
+            </div>
+            <p class="footer-note">
+                ※このツールはブラウザ内で処理が完結します。データがサーバーに送信されることはありません。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M16.5 5.5L7.5 14.5L3.5 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+        <span id="toastMessage">コピーしました</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
