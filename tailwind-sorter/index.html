@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Tailwind Class Sorter & Cleaner - Tailwind CSSクラス整形ツール | Creators Box</title>
+    <meta name="description" content="Tailwind CSSのクラス名を公式推奨順序で自動整形。重複削除・並べ替えでコードの可読性を向上。ブラウザ完結で安全・無料のオンラインツール。">
+    <meta name="keywords" content="Tailwind CSS, クラス整形, ソート, 並べ替え, コード整形, フロントエンド, 開発ツール">
+    <meta name="author" content="Creators Box">
+    
+    <!-- OGP Tags for Social Sharing -->
+    <meta property="og:title" content="Tailwind Class Sorter & Cleaner | Creators Box">
+    <meta property="og:description" content="Tailwind CSSのクラス名を自動で整形・並べ替え。コードの可読性を劇的に改善します。">
+    <meta property="og:type" content="website">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="site-logo">Creators Box</a>
+                <h1 class="tool-title">Tailwind Class Sorter & Cleaner</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Tool Section -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Tool Description -->
+            <section class="tool-intro">
+                <p class="intro-text">
+                    Tailwind CSSのクラス名を公式推奨の順序で自動整形。重複を削除し、コードの可読性を向上させます。
+                </p>
+            </section>
+
+            <!-- Tool Interface -->
+            <section class="tool-interface">
+                <div class="editor-grid">
+                    <!-- Input Area -->
+                    <div class="editor-panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title">入力 (Input)</h2>
+                            <button class="btn-clear" id="clearInput" aria-label="入力をクリア">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                クリア
+                            </button>
+                        </div>
+                        <textarea 
+                            id="inputArea" 
+                            class="code-editor"
+                            placeholder='ここにclass="..."を含むHTML、またはクラス名だけを入力してください
+
+例1: <div class="flex items-center justify-center p-4 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">
+
+例2: flex items-center justify-center p-4 bg-blue-500'
+                            spellcheck="false"
+                        ></textarea>
+                    </div>
+
+                    <!-- Output Area -->
+                    <div class="editor-panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title">出力 (Output)</h2>
+                            <button class="btn-copy" id="copyButton" aria-label="整形されたコードをコピー">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <rect x="5" y="5" width="9" height="9" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M3 11V3C3 2.44772 3.44772 2 4 2H10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                                コピー
+                            </button>
+                        </div>
+                        <textarea 
+                            id="outputArea" 
+                            class="code-editor output-area"
+                            readonly
+                            placeholder="整形されたコードがここに表示されます"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="action-section">
+                    <button class="btn-primary" id="sortButton">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M6 4L6 14M6 14L3 11M6 14L9 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 16L14 6M14 6L11 9M14 6L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        整形する (Sort Classes)
+                    </button>
+                </div>
+            </section>
+
+            <!-- Educational Content for SEO and AdSense -->
+            <article class="content-section">
+                <section class="content-block">
+                    <h2>このツールについて</h2>
+                    <p>
+                        Tailwind Class Sorter & Cleanerは、Tailwind CSSを使用する開発者のためのコード整形ツールです。HTMLやJSX内に記述された乱雑なクラス名を、公式が推奨する論理的な順序に自動で並べ替えます。また、重複したクラス名も自動的に検出・削除するため、コードの冗長性を排除できます。入力欄にHTMLコードをペーストするだけで、瞬時に整形された美しいコードが出力されます。チーム開発でのコーディング規約統一や、リファクタリング作業の効率化に最適です。フレームワークを問わず、React、Vue、Next.jsなどあらゆるプロジェクトでご利用いただけます。
+                    </p>
+                </section>
+
+                <section class="content-block">
+                    <h2>なぜクラス順序の統一が重要なのか</h2>
+                    <p>
+                        Tailwind CSSのクラス名を一定の順序で記述することは、単なる「見た目の問題」ではありません。統一された順序は、コードレビューの効率を大幅に向上させます。メンバー全員が同じ並び順を採用することで、差分確認時の認知負荷が軽減され、本質的な変更点に集中できます。また、Gitでのコンフリクトも減少します。さらに、Gzip圧縮においても、パターンが統一されることで圧縮率が向上する可能性があります。Layout → Positioning → Sizing → Spacing → Typography → Visual といった論理的な順序でクラスを配置することで、後から読む人が直感的にスタイルを理解しやすくなります。保守性の高いコードベースを維持するために、クラス順序の統一は不可欠です。
+                    </p>
+                </section>
+
+                <section class="content-block">
+                    <h2>ブラウザ完結で安心</h2>
+                    <p>
+                        このツールは完全にクライアントサイド（ブラウザ内）で動作します。入力されたコードがサーバーに送信されることは一切ありません。すべての処理はあなたのブラウザのJavaScript上で完結するため、機密情報を含むプロジェクトのコードや、未公開のプロダクトコードでも安心してご利用いただけます。インターネット接続が不安定な環境でも、一度ページを読み込めばオフラインで動作します。また、APIキーや会員登録も不要で、完全無料でご利用いただけます。データプライバシーを重視する企業やフリーランスの開発者にとって、安全かつ便利なコード整形ソリューションです。
+                    </p>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 Creators Box | <a href="/privacy.html">プライバシーポリシー</a></p>
+            <p class="footer-note">※当サイトのツールはブラウザ内で処理が完結します。データがサーバーに送信されることはありません。</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

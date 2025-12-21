@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Diff Checker</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#1e293b',
+                            950: '#020617',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        .upload-dashed {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%236366f1' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+        }
+        .checker-bg {
+            background-color: #1e293b;
+            background-image: linear-gradient(45deg, #0f172a 25%, transparent 25%), linear-gradient(-45deg, #0f172a 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #0f172a 75%), linear-gradient(-45deg, transparent 75%, #0f172a 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-900 border-b border-slate-800 p-4 sticky top-0 z-50 backdrop-blur-md bg-opacity-80">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">Design Diff Checker</h1>
+                    <p class="text-xs text-slate-400">Secure Client-Side Image Comparison</p>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div id="controls" class="flex flex-wrap items-center gap-4 opacity-50 pointer-events-none transition-opacity duration-300">
+                <!-- Modes -->
+                <div class="bg-slate-800 p-1 rounded-lg flex gap-1">
+                    <button onclick="setMode('diff')" id="btn-diff" class="px-4 py-1.5 rounded-md text-sm font-medium bg-indigo-600 text-white shadow-md transition-all">Diff</button>
+                    <button onclick="setMode('overlay')" id="btn-overlay" class="px-4 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700 transition-all">Overlay</button>
+                    <button onclick="setMode('side')" id="btn-side" class="px-4 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700 transition-all">Side-by-Side</button>
+                </div>
+
+                <!-- Sliders -->
+                <div class="flex items-center gap-4 bg-slate-800 px-4 py-2 rounded-lg border border-slate-700">
+                    <div id="control-threshold" class="flex flex-col w-32">
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-400">Threshold</span>
+                            <span id="label-threshold" class="text-indigo-400 font-mono">10%</span>
+                        </div>
+                        <input type="range" id="input-threshold" min="0" max="100" value="10" class="w-full h-1 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                    </div>
+                    <div id="control-opacity" class="hidden flex-col w-32">
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-400">Opacity</span>
+                            <span id="label-opacity" class="text-indigo-400 font-mono">50%</span>
+                        </div>
+                        <input type="range" id="input-opacity" min="0" max="100" value="50" class="w-full h-1 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col p-4 md:p-8 max-w-[1920px] mx-auto w-full gap-6">
+        
+        <!-- Upload Area -->
+        <div id="upload-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-500">
+            <!-- Before Upload -->
+            <div id="drop-before" class="relative group upload-dashed rounded-2xl p-8 flex flex-col items-center justify-center min-h-[200px] cursor-pointer hover:bg-slate-800/30 transition-all" onclick="document.getElementById('file-before').click()">
+                <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+                <h3 class="text-lg font-semibold text-slate-200">Before Image</h3>
+                <p class="text-sm text-slate-500 mt-2">Drag & drop or click to upload</p>
+                <input type="file" id="file-before" class="hidden" accept="image/*" onchange="handleFile(this.files[0], 'before')">
+                <!-- Preview -->
+                <img id="preview-before" class="absolute inset-0 w-full h-full object-contain p-4 hidden pointer-events-none" />
+                <div id="status-before" class="absolute top-2 right-2 bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold hidden border border-green-500/30">READY</div>
+            </div>
+
+            <!-- After Upload -->
+            <div id="drop-after" class="relative group upload-dashed rounded-2xl p-8 flex flex-col items-center justify-center min-h-[200px] cursor-pointer hover:bg-slate-800/30 transition-all" onclick="document.getElementById('file-after').click()">
+                <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+                <h3 class="text-lg font-semibold text-slate-200">After Image</h3>
+                <p class="text-sm text-slate-500 mt-2">Drag & drop or click to upload</p>
+                <input type="file" id="file-after" class="hidden" accept="image/*" onchange="handleFile(this.files[0], 'after')">
+                <!-- Preview -->
+                <img id="preview-after" class="absolute inset-0 w-full h-full object-contain p-4 hidden pointer-events-none" />
+                <div id="status-after" class="absolute top-2 right-2 bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold hidden border border-green-500/30">READY</div>
+            </div>
+        </div>
+
+        <!-- Canvas View Area -->
+        <div id="view-area" class="flex-grow hidden flex-col items-center justify-center relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+            <div class="absolute inset-0 checker-bg z-0 opacity-50"></div>
+            
+            <!-- Result Container -->
+            <div id="result-container" class="relative z-10 w-full h-full overflow-auto flex items-start justify-center p-8">
+                
+                <!-- Diff View -->
+                <canvas id="diff-canvas" class="max-w-none shadow-2xl"></canvas>
+
+                <!-- Overlay View (Onion Skin) -->
+                <div id="overlay-container" class="relative hidden shadow-2xl">
+                    <img id="img-base" class="block max-w-none" />
+                    <img id="img-overlay" class="absolute top-0 left-0 max-w-none mix-blend-normal transition-opacity duration-75" />
+                </div>
+
+                <!-- Side By Side View -->
+                <div id="side-container" class="hidden flex-row gap-4 h-full items-start">
+                    <div class="flex flex-col gap-2">
+                        <span class="text-xs text-slate-400 font-mono text-center block">BEFORE</span>
+                        <img id="side-before" class="max-w-full border border-slate-700 shadow-xl" />
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <span class="text-xs text-slate-400 font-mono text-center block">AFTER</span>
+                        <img id="side-after" class="max-w-full border border-slate-700 shadow-xl" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Initial Status Message -->
+        <div id="empty-state" class="text-center py-12 text-slate-500">
+            <p>Upload both images to start comparison</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center p-4 text-xs text-slate-600 border-t border-slate-900 bg-slate-950">
+        &copy; 2024 Design Diff Checker | Runs safely in your browser
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        // --- State ---
+        const state = {
+            beforeImage: null,
+            afterImage: null,
+            mode: 'diff', // 'diff' | 'overlay' | 'side'
+            threshold: 10, // 0-100
+            opacity: 50, // 0-100
+        };
+
+        // --- Elements ---
+        const els = {
+            dropBefore: document.getElementById('drop-before'),
+            dropAfter: document.getElementById('drop-after'),
+            previewBefore: document.getElementById('preview-before'),
+            previewAfter: document.getElementById('preview-after'),
+            statusBefore: document.getElementById('status-before'),
+            statusAfter: document.getElementById('status-after'),
+            controls: document.getElementById('controls'),
+            uploadContainer: document.getElementById('upload-container'),
+            viewArea: document.getElementById('view-area'),
+            emptyState: document.getElementById('empty-state'),
+            
+            // Output elements
+            diffCanvas: document.getElementById('diff-canvas'),
+            overlayContainer: document.getElementById('overlay-container'),
+            imgBase: document.getElementById('img-base'),
+            imgOverlay: document.getElementById('img-overlay'),
+            sideContainer: document.getElementById('side-container'),
+            sideBefore: document.getElementById('side-before'),
+            sideAfter: document.getElementById('side-after'),
+
+            // Inputs
+            inputThreshold: document.getElementById('input-threshold'),
+            inputOpacity: document.getElementById('input-opacity'),
+            labelThreshold: document.getElementById('label-threshold'),
+            labelOpacity: document.getElementById('label-opacity'),
+        };
+
+        // --- Event Listeners ---
+        
+        // Drag and Drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            els.dropBefore.addEventListener(eventName, preventDefaults, false);
+            els.dropAfter.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            els.dropBefore.addEventListener(eventName, () => els.dropBefore.classList.add('bg-slate-800/50', 'border-indigo-500'));
+            els.dropAfter.addEventListener(eventName, () => els.dropAfter.classList.add('bg-slate-800/50', 'border-purple-500'));
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            els.dropBefore.addEventListener(eventName, () => els.dropBefore.classList.remove('bg-slate-800/50', 'border-indigo-500'));
+            els.dropAfter.addEventListener(eventName, () => els.dropAfter.classList.remove('bg-slate-800/50', 'border-purple-500'));
+        });
+
+        els.dropBefore.addEventListener('drop', (e) => handleDrop(e, 'before'));
+        els.dropAfter.addEventListener('drop', (e) => handleDrop(e, 'after'));
+
+        // Controls
+        els.inputThreshold.addEventListener('input', (e) => {
+            state.threshold = parseInt(e.target.value);
+            els.labelThreshold.textContent = state.threshold + '%';
+            if(state.mode === 'diff') updateView();
+        });
+
+        els.inputOpacity.addEventListener('input', (e) => {
+            state.opacity = parseInt(e.target.value);
+            els.labelOpacity.textContent = state.opacity + '%';
+            if(state.mode === 'overlay') updateOverlay();
+        });
+
+        // --- Core Functions ---
+
+        function handleDrop(e, type) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFile(files[0], type);
+        }
+
+        function handleFile(file, type) {
+            if (!file || !file.type.startsWith('image/')) {
+                alert('画像ファイルを選択してください。');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                const img = new Image();
+                img.src = reader.result;
+                img.onload = () => {
+                    if (type === 'before') {
+                        state.beforeImage = img;
+                        els.previewBefore.src = img.src;
+                        els.previewBefore.classList.remove('hidden');
+                        els.statusBefore.classList.remove('hidden');
+                        // Side view update
+                        els.sideBefore.src = img.src;
+                    } else {
+                        state.afterImage = img;
+                        els.previewAfter.src = img.src;
+                        els.previewAfter.classList.remove('hidden');
+                        els.statusAfter.classList.remove('hidden');
+                        // Side view update
+                        els.sideAfter.src = img.src;
+                    }
+                    checkReady();
+                }
+            }
+        }
+
+        function checkReady() {
+            if (state.beforeImage && state.afterImage) {
+                // UI Activation
+                els.controls.classList.remove('opacity-50', 'pointer-events-none');
+                els.viewArea.classList.remove('hidden');
+                els.viewArea.classList.add('flex');
+                els.emptyState.classList.add('hidden');
+                
+                // Minimize upload area to give space
+                els.uploadContainer.classList.remove('grid-cols-1', 'md:grid-cols-2');
+                els.uploadContainer.classList.add('grid-cols-2', 'h-32');
+                els.dropBefore.classList.remove('min-h-[200px]', 'p-8');
+                els.dropAfter.classList.remove('min-h-[200px]', 'p-8');
+                els.dropBefore.classList.add('p-2');
+                els.dropAfter.classList.add('p-2');
+                
+                // Hide texts in dropzone to make it compact
+                els.dropBefore.querySelector('h3').classList.add('hidden');
+                els.dropBefore.querySelector('p').classList.add('hidden');
+                els.dropBefore.querySelector('div').classList.add('hidden'); // icon
+                els.dropAfter.querySelector('h3').classList.add('hidden');
+                els.dropAfter.querySelector('p').classList.add('hidden');
+                els.dropAfter.querySelector('div').classList.add('hidden'); // icon
+
+                updateView();
+            }
+        }
+
+        function setMode(mode) {
+            state.mode = mode;
+            
+            // Update buttons
+            ['diff', 'overlay', 'side'].forEach(m => {
+                const btn = document.getElementById(`btn-${m}`);
+                if (m === mode) {
+                    btn.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+                    btn.classList.remove('text-slate-400', 'hover:text-white', 'hover:bg-slate-700');
+                } else {
+                    btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+                    btn.classList.add('text-slate-400', 'hover:text-white', 'hover:bg-slate-700');
+                }
+            });
+
+            // Update Controls visibility
+            if (mode === 'overlay') {
+                els.controlThreshold.classList.add('hidden');
+                els.controlOpacity.classList.add('flex');
+                els.controlOpacity.classList.remove('hidden');
+            } else if (mode === 'diff') {
+                els.controlThreshold.classList.remove('hidden');
+                els.controlOpacity.classList.add('hidden');
+                els.controlOpacity.classList.remove('flex');
+            } else {
+                els.controlThreshold.classList.add('hidden');
+                els.controlOpacity.classList.add('hidden');
+                els.controlOpacity.classList.remove('flex');
+            }
+
+            updateView();
+        }
+        
+        // Element references for sliders (cached better)
+        els.controlThreshold = document.getElementById('control-threshold');
+        els.controlOpacity = document.getElementById('control-opacity');
+
+        function updateView() {
+            // Hide all views first
+            els.diffCanvas.classList.add('hidden');
+            els.overlayContainer.classList.add('hidden');
+            els.sideContainer.classList.add('hidden');
+            els.sideContainer.classList.remove('flex');
+
+            if (state.mode === 'diff') {
+                els.diffCanvas.classList.remove('hidden');
+                renderDiff();
+            } else if (state.mode === 'overlay') {
+                els.overlayContainer.classList.remove('hidden');
+                renderOverlay();
+            } else if (state.mode === 'side') {
+                els.sideContainer.classList.remove('hidden');
+                els.sideContainer.classList.add('flex');
+            }
+        }
+
+        // --- DIFF LOGIC ---
+        function renderDiff() {
+            const w = Math.max(state.beforeImage.naturalWidth, state.afterImage.naturalWidth);
+            const h = Math.max(state.beforeImage.naturalHeight, state.afterImage.naturalHeight);
+
+            els.diffCanvas.width = w;
+            els.diffCanvas.height = h;
+
+            const ctx = els.diffCanvas.getContext('2d', { willReadFrequently: true });
+            
+            // Clear
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw images to offscreen canvas to get pixel data
+            const c1 = document.createElement('canvas'); c1.width = w; c1.height = h;
+            const ctx1 = c1.getContext('2d');
+            ctx1.drawImage(state.beforeImage, 0, 0);
+            
+            const c2 = document.createElement('canvas'); c2.width = w; c2.height = h;
+            const ctx2 = c2.getContext('2d');
+            ctx2.drawImage(state.afterImage, 0, 0);
+
+            const imgData1 = ctx1.getImageData(0, 0, w, h);
+            const imgData2 = ctx2.getImageData(0, 0, w, h);
+            const data1 = imgData1.data;
+            const data2 = imgData2.data;
+            const output = ctx.createImageData(w, h);
+            const dataOut = output.data;
+
+            // Threshold normalization (0-100 -> 0-255 roughly)
+            // actually simple euclidean distance is sqrt(rd^2 + gd^2 + bd^2). 
+            // Max distance is sqrt(255^2*3) approx 441. 
+            // let's say threshold 10% means ignore diffs smaller than 44.
+            const th = (state.threshold / 100) * 441.6; 
+
+            for (let i = 0; i < data1.length; i += 4) {
+                const r1 = data1[i], g1 = data1[i+1], b1 = data1[i+2], a1 = data1[i+3];
+                const r2 = data2[i], g2 = data2[i+1], b2 = data2[i+2], a2 = data2[i+3];
+
+                // If both transparent, skip
+                if (a1 === 0 && a2 === 0) continue;
+
+                const dist = Math.sqrt(
+                    Math.pow(r1 - r2, 2) + 
+                    Math.pow(g1 - g2, 2) + 
+                    Math.pow(b1 - b2, 2) + 
+                    Math.pow(a1 - a2, 2)
+                );
+
+                if (dist > th) {
+                    // Diff found -> Draw RED
+                    dataOut[i] = 239; // R
+                    dataOut[i+1] = 68; // G
+                    dataOut[i+2] = 68; // B
+                    dataOut[i+3] = 255; // A
+                } else {
+                    // No diff -> Draw original dimmed slightly or just black/transparent
+                    // To visualize context, let's draw the "After" image but very dark/grayscale
+                    // so the red pops out.
+                    const gray = (r2 * 0.3 + g2 * 0.59 + b2 * 0.11) * 0.3;
+                    dataOut[i] = gray;
+                    dataOut[i+1] = gray;
+                    dataOut[i+2] = gray;
+                    dataOut[i+3] = 255; 
+                }
+            }
+            
+            ctx.putImageData(output, 0, 0);
+        }
+
+        // --- OVERLAY LOGIC ---
+        function renderOverlay() {
+            // Set sources
+            els.imgBase.src = state.beforeImage.src;
+            els.imgOverlay.src = state.afterImage.src;
+            updateOverlay();
+        }
+
+        function updateOverlay() {
+            els.imgOverlay.style.opacity = state.opacity / 100;
+        }
+
+    </script>
+</body>
+</html>
