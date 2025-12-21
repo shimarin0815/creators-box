@@ -1,6 +1,6 @@
 /* ===================================
    Creators Box - Landing Page Styles
-   Modern, Clean Design for Tool Dashboard
+   Modern Tech Grid Design - SaaS Product Aesthetic
    =================================== */
 
 /* === CSS Variables === */
@@ -14,11 +14,15 @@
     /* Accent Colors */
     --color-accent: #06b6d4;
     --color-accent-light: #e0f2fe;
+    --color-orange: #f97316;
+    --color-purple: #a855f7;
+    --color-purple-light: #f3e8ff;
 
     /* Neutrals */
     --color-background: #ffffff;
     --color-surface: #f8fafc;
     --color-border: #e2e8f0;
+    --color-border-subtle: #f1f5f9;
     --color-text-primary: #0f172a;
     --color-text-secondary: #475569;
     --color-text-muted: #94a3b8;
@@ -36,23 +40,25 @@
     /* Typography */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    /* Shadows - Refined for Bento Grid */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 8px 16px -4px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+    --shadow-xl: 0 16px 32px -8px rgba(0, 0, 0, 0.12), 0 4px 8px -4px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 12px 24px -6px rgba(79, 70, 229, 0.15), 0 4px 8px -2px rgba(0, 0, 0, 0.05);
 
-    /* Border Radius */
+    /* Border Radius - Larger for modern feel */
     --radius-sm: 0.375rem;
     --radius-md: 0.5rem;
     --radius-lg: 0.75rem;
     --radius-xl: 1rem;
     --radius-2xl: 1.5rem;
+    --radius-card: 14px;
 
     /* Transitions */
-    --transition-fast: 150ms ease;
-    --transition-base: 200ms ease;
-    --transition-slow: 300ms ease;
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* === Reset & Base Styles === */
@@ -66,7 +72,11 @@ body {
     font-family: var(--font-sans);
     color: var(--color-text-primary);
     background-color: var(--color-background);
-    line-height: 1.6;
+    /* Dot Matrix Background Pattern */
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -90,6 +100,18 @@ a {
     padding: var(--spacing-4xl) 0 var(--spacing-3xl);
     position: relative;
     overflow: hidden;
+}
+
+/* Subtle curve/wave at bottom for smooth transition */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--color-surface);
+    clip-path: ellipse(75% 100% at 50% 100%);
 }
 
 .hero::before {
@@ -208,6 +230,7 @@ a {
     color: var(--color-text-secondary);
     max-width: 36rem;
     margin: 0 auto;
+    line-height: 1.8;
 }
 
 /* === Tools Grid === */
@@ -217,7 +240,7 @@ a {
     gap: var(--spacing-xl);
 }
 
-/* === Tool Card === */
+/* === Tool Card - Bento Grid Style === */
 .tool-card {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -225,34 +248,21 @@ a {
     align-items: center;
     padding: var(--spacing-xl);
     background: white;
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-xl);
+    /* Subtle border for Bento Grid aesthetic */
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    /* Minimal shadow by default */
+    box-shadow: var(--shadow-sm);
     transition: all var(--transition-base);
     position: relative;
-    overflow: hidden;
-}
-
-.tool-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--transition-slow);
+    overflow: visible;
 }
 
 .tool-card:hover {
-    border-color: var(--color-primary);
-    box-shadow: var(--shadow-xl);
+    border-color: rgba(79, 70, 229, 0.2);
+    /* Soft, spread shadow on hover */
+    box-shadow: var(--shadow-hover);
     transform: translateY(-4px);
-}
-
-.tool-card:hover::before {
-    transform: scaleX(1);
 }
 
 .tool-card:active {
@@ -265,10 +275,29 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent-light));
     border-radius: var(--radius-lg);
-    color: var(--color-primary);
     flex-shrink: 0;
+    transition: transform var(--transition-base);
+}
+
+/* Themed icon backgrounds for each tool */
+.tool-card:nth-child(1) .card-icon {
+    background: linear-gradient(135deg, var(--color-primary-light), #dbeafe);
+    color: var(--color-primary);
+}
+
+.tool-card:nth-child(2) .card-icon {
+    background: linear-gradient(135deg, var(--color-accent-light), #cffafe);
+    color: var(--color-accent);
+}
+
+.tool-card:nth-child(3) .card-icon {
+    background: linear-gradient(135deg, var(--color-purple-light), #fae8ff);
+    color: var(--color-purple);
+}
+
+.tool-card:hover .card-icon {
+    transform: scale(1.05);
 }
 
 .card-content {
@@ -282,12 +311,16 @@ a {
     color: var(--color-text-primary);
     margin-bottom: var(--spacing-sm);
     line-height: 1.3;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
 }
 
 .card-description {
     font-size: 1rem;
     color: var(--color-text-secondary);
-    line-height: 1.6;
+    line-height: 1.75;
     margin-bottom: var(--spacing-md);
 }
 
@@ -320,6 +353,36 @@ a {
 
 .tool-card:hover .card-arrow {
     transform: translateX(4px);
+}
+
+/* === NEW Badge === */
+.badge-new {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    background: linear-gradient(135deg, #ff6b6b, var(--color-orange));
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25);
+    animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25);
+    }
+
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
+    }
 }
 
 /* === Features Section === */
