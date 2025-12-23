@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プライバシー請求書・見積書メーカー | Creators Box</title>
+    <meta name="description" content="登録不要・サーバー送信なし。ブラウザだけで完結するセキュアなインボイス対応請求書・見積書・納品書作成ツール。PDFで即時発行。">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header class="tool-header">
+        <div class="container header-inner">
+            <a href="../../index.html" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Creators Box
+            </a>
+            <h1 class="tool-title-sm">プライバシー請求書メーカー</h1>
+        </div>
+    </header>
+
+    <main class="invoice-maker-container">
+        <div class="container main-grid">
+            <!-- Left Panel: Editor -->
+            <section class="editor-panel">
+                <div class="panel-header">
+                    <h2>書類編集</h2>
+                    <p class="privacy-note">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        データはサーバーに送信されず、ブラウザ内のみで処理されます
+                    </p>
+                </div>
+
+                <form id="invoiceForm" class="editor-form">
+                    <!-- Basic Settings -->
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label for="docType">書類タイプ</label>
+                            <select id="docType" class="input-light">
+                                <option value="invoice">請求書</option>
+                                <option value="estimate">見積書</option>
+                                <option value="delivery">納品書</option>
+                                <option value="receipt">領収書</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="themeColor">テーマカラー</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="themeColor" value="#3b82f6">
+                                <span id="colorValue">#3b82f6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="form-divider">
+
+                    <!-- Issuer Info (Self) -->
+                    <div class="accordion open">
+                        <h3 class="accordion-header">発行元情報（あなた）</h3>
+                        <div class="accordion-content">
+                            <div class="form-group">
+                                <label>屋号 / 名前</label>
+                                <input type="text" id="issuerName" class="input-light" placeholder="例: 山田 太郎 / Studio Web" value="Studio Web">
+                            </div>
+                            <div class="form-group">
+                                <label>インボイス登録番号 (T+13桁)</label>
+                                <input type="text" id="issuerReg" class="input-light" placeholder="例: T1234567890123" maxlength="14">
+                            </div>
+                            <div class="form-group">
+                                <label>住所・連絡先</label>
+                                <textarea id="issuerAddress" class="input-light textarea-sm" placeholder="〒000-0000 東京都...&#10;Tel: 090-0000-0000&#10;Email: info@example.com"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>印影画像 (PNG/JPG)</label>
+                                <input type="file" id="stampUpload" accept="image/*" class="file-input">
+                                <div id="stampPreviewArea" class="stamp-preview-container hidden">
+                                    <img id="stampImageSrc" src="" alt="印影プレビュー">
+                                    <button type="button" id="removeStamp" class="text-btn-danger">削除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="form-divider">
+
+                    <!-- Client Info -->
+                    <div class="accordion open">
+                        <h3 class="accordion-header">取引先情報 & 日付</h3>
+                        <div class="accordion-content">
+                            <div class="form-group">
+                                <label>取引先会社名</label>
+                                <input type="text" id="clientName" class="input-light" placeholder="例: 株式会社クライアント">
+                            </div>
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label>敬称</label>
+                                    <select id="clientHonorific" class="input-light">
+                                        <option value="御中">御中</option>
+                                        <option value="様">様</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="flex:2;">
+                                    <label>件名</label>
+                                    <input type="text" id="subject" class="input-light" placeholder="例: Webサイトリニューアル案件">
+                                </div>
+                            </div>
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label>発行日</label>
+                                    <input type="date" id="issueDate" class="input-light">
+                                </div>
+                                <div class="form-group">
+                                    <label>お支払期限</label>
+                                    <input type="date" id="dueDate" class="input-light">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>振込先情報</label>
+                                <textarea id="bankInfo" class="input-light textarea-sm" placeholder="銀行名 支店名&#10;口座種別 口座番号&#10;口座名義"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="form-divider">
+
+                    <!-- Line Items -->
+                    <div class="accordion open">
+                        <h3 class="accordion-header">明細</h3>
+                        <div class="accordion-content">
+                            <div id="lineItemsContainer">
+                                <!-- Line items will be injected here by JS -->
+                            </div>
+                            <button type="button" id="addItemBtn" class="btn-secondary full-width">+ 明細行を追加</button>
+                        </div>
+                    </div>
+
+                    <hr class="form-divider">
+
+                    <!-- Tax Settings -->
+                    <div class="accordion open">
+                        <h3 class="accordion-header">税金・備考設定</h3>
+                        <div class="accordion-content">
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label>消費税率</label>
+                                    <select id="taxRate" class="input-light">
+                                        <option value="0.10">10%</option>
+                                        <option value="0.08">8% (軽減税率)</option>
+                                        <option value="0">0% (非課基本)</option>
+                                    </select>
+                                </div>
+                                <div class="form-check-group">
+                                    <input type="checkbox" id="withholdingTax" class="checkbox-custom">
+                                    <label for="withholdingTax">源泉徴収税を計算する (10.21%)</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>備考</label>
+                                <textarea id="remarks" class="input-light textarea-sm" placeholder="備考欄..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Right Panel: Preview -->
+            <section class="preview-panel-wrapper">
+                <div class="preview-actions">
+                    <button type="button" id="downloadPdfBtn" class="btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        PDFとして保存
+                    </button>
+                </div>
+
+                <div class="preview-container-scroll">
+                    <!-- The Invoice Paper -->
+                    <div id="invoicePreview" class="invoice-paper">
+                        <div class="invoice-header">
+                            <h1 id="previewTitle" class="invoice-title">請求書</h1>
+                            <div class="invoice-meta">
+                                <div class="meta-row">
+                                    <span class="meta-label">No.</span>
+                                    <span class="meta-value edit-on-click" contenteditable="true" id="invoiceNumber">20251223-01</span>
+                                </div>
+                                <div class="meta-row">
+                                    <span class="meta-label">発行日</span>
+                                    <span class="meta-value" id="previewDate">2025年12月23日</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="invoice-top-section">
+                            <div class="client-area">
+                                <div class="client-name">
+                                    <span id="previewClientName">株式会社クライアント</span>
+                                    <span id="previewClientHonorific">御中</span>
+                                </div>
+                                <div class="invoice-subject">
+                                    件名：<span id="previewSubject">Webサイトリニューアル案件</span>
+                                </div>
+                                <div class="total-amount-box">
+                                    <div class="total-label">ご請求金額</div>
+                                    <div class="total-value">¥ <span id="previewTotalAmount">0</span> -</div>
+                                    <div class="payment-due">
+                                        お支払期限：<span id="previewDueDate">2026年01月31日</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="issuer-area">
+                                <div class="issuer-name" id="previewIssuerName">Studio Web</div>
+                                <div class="issuer-reg" id="previewIssuerReg">登録番号：T1234567890123</div>
+                                <div class="issuer-address" id="previewIssuerAddress">
+                                    〒000-0000<br>東京都...
+                                </div>
+                                <div class="issuer-stamp" id="previewStampWrapper">
+                                    <!-- Stamp image will appear here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="invoice-body">
+                            <table class="invoice-table">
+                                <thead>
+                                    <tr>
+                                        <th class="th-item">品目</th>
+                                        <th class="th-qty">数量</th>
+                                        <th class="th-unit">単価</th>
+                                        <th class="th-amount">金額</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="previewLineItems">
+                                    <!-- Rows go here -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2" class="no-border"></td>
+                                        <td class="td-summary-label">小計</td>
+                                        <td class="td-summary-val">¥ <span id="previewSubtotal">0</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="no-border"></td>
+                                        <td class="td-summary-label">消費税 (<span id="previewTaxRate">10</span>%)</td>
+                                        <td class="td-summary-val">¥ <span id="previewTaxAmount">0</span></td>
+                                    </tr>
+                                    <tr id="rowWithholding" class="hidden">
+                                        <td colspan="2" class="no-border"></td>
+                                        <td class="td-summary-label">源泉徴収税</td>
+                                        <td class="td-summary-val text-red">- ¥ <span id="previewWithholdingAmount">0</span></td>
+                                    </tr>
+                                    <tr class="tr-total">
+                                        <td colspan="2" class="no-border"></td>
+                                        <td class="td-summary-label">合計</td>
+                                        <td class="td-summary-val">¥ <span id="previewTotalBottom">0</span></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            <div class="remarks-area">
+                                <div class="remarks-label">備考</div>
+                                <div class="remarks-content" id="previewRemarks"></div>
+                            </div>
+
+                            <div class="bank-area">
+                                <div class="remarks-label">振込先</div>
+                                <div class="remarks-content" id="previewBankInfo"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="tool-footer">
+        <div class="container">
+            <p>&copy; 2025 Creators Box</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

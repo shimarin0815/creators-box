@@ -1,0 +1,460 @@
+/* Invoice Maker Specific Styles */
+
+/* Layout Variables */
+:root {
+    --preview-width-pc: 210mm;
+    /* A4 width */
+    --preview-height-pc: 297mm;
+    /* A4 height */
+    --accent-color: #3b82f6;
+    /* Default accent, changeable via JS */
+}
+
+.invoice-maker-container {
+    padding: 2rem 0;
+    min-height: calc(100vh - 60px - 60px);
+    background-color: #f8fafc;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Editor Panel */
+.editor-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 2rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+    .editor-panel {
+        position: static;
+        max-height: none;
+    }
+}
+
+.panel-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.privacy-note {
+    font-size: 0.75rem;
+    color: #059669;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+    background: #ecfdf5;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.input-light {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.925rem;
+    transition: all 0.2s;
+}
+
+.input-light:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.textarea-sm {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.form-group-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-group-row .form-group {
+    flex: 1;
+}
+
+.color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+input[type="color"] {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+    border: 1px solid #e2e8f0;
+}
+
+.form-divider {
+    border: 0;
+    border-top: 1px solid #f1f5f9;
+    margin: 1.5rem 0;
+}
+
+.stamp-preview-container {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stamp-preview-container img {
+    max-height: 60px;
+    border: 1px solid #e2e8f0;
+}
+
+.text-btn-danger {
+    color: #ef4444;
+    font-size: 0.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Line Items Editor */
+.line-item-row {
+    display: grid;
+    grid-template-columns: 1fr 60px 80px 30px;
+    gap: 0.5rem;
+    align-items: end;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px dashed #e2e8f0;
+}
+
+.line-item-row input {
+    font-size: 0.85rem;
+    padding: 0.4rem;
+}
+
+.btn-remove-item {
+    color: #94a3b8;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+}
+
+.btn-remove-item:hover {
+    color: #ef4444;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.form-check-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+    /* align with input label */
+}
+
+.checkbox-custom {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Right Panel: Preview */
+.preview-panel-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.preview-actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.preview-container-scroll {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    background: #e2e8f0;
+    /* Contrast background for paper */
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.invoice-paper {
+    width: var(--preview-width-pc);
+    min-height: var(--preview-height-pc);
+    /* Allow growth provided we handle page breaks (not doing multi-page yet) */
+    background: white;
+    padding: 15mm 15mm;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    color: #1e293b;
+    font-family: 'Noto Sans JP', sans-serif;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Invoice Paper Internal Styling */
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.invoice-title {
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin: 0;
+    letter-spacing: 0.1em;
+}
+
+.invoice-meta {
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.meta-row {
+    margin-bottom: 0.25rem;
+}
+
+.meta-label {
+    margin-right: 0.5rem;
+    color: #64748b;
+}
+
+.invoice-top-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    gap: 2rem;
+}
+
+.client-area {
+    flex: 1;
+}
+
+.client-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    min-width: 60%;
+}
+
+.invoice-subject {
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.total-amount-box {
+    background: #f8fafc;
+    padding: 1rem;
+    border-left: 4px solid var(--accent-color);
+}
+
+.total-label {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.total-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0.25rem 0;
+}
+
+.payment-due {
+    font-size: 0.85rem;
+    color: #ef4444;
+}
+
+.issuer-area {
+    width: 240px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.issuer-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.issuer-stamp {
+    margin-top: 1rem;
+    height: 80px;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.issuer-stamp img {
+    max-height: 100%;
+    opacity: 0.8;
+}
+
+/* Invoice Table */
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.invoice-table th,
+.invoice-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.invoice-table th {
+    background-color: var(--accent-color);
+    color: white;
+    font-weight: 500;
+    text-align: left;
+}
+
+.th-qty,
+.th-unit,
+.th-amount,
+.td-qty,
+.td-unit,
+.td-amount {
+    text-align: right;
+}
+
+.th-qty {
+    width: 10%;
+}
+
+.th-unit {
+    width: 15%;
+}
+
+.th-amount {
+    width: 15%;
+}
+
+.td-summary-label {
+    background-color: #f1f5f9;
+    font-weight: 600;
+    text-align: center;
+}
+
+.td-summary-val {
+    text-align: right;
+    font-weight: 600;
+}
+
+.tr-total .td-summary-label {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.tr-total .td-summary-val {
+    font-size: 1.25rem;
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.no-border {
+    border: none;
+}
+
+.text-red {
+    color: #ef4444;
+}
+
+.remarks-area,
+.bank-area {
+    margin-bottom: 1.5rem;
+    page-break-inside: avoid;
+}
+
+.remarks-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    border-bottom: 1px solid #cbd5e1;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    width: fit-content;
+}
+
+.remarks-content {
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+.edit-on-click {
+    border-bottom: 1px dashed #cbd5e1;
+    cursor: text;
+}
+
+.edit-on-click:focus {
+    outline: none;
+    border-bottom: 1px solid var(--primary-color);
+    background: #f0f9ff;
+}
