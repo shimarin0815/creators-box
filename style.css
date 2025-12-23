@@ -301,6 +301,21 @@ a {
     color: #10b981;
 }
 
+.tool-card:nth-child(5) .card-icon {
+    background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+    color: #db2777;
+}
+
+.tool-card:nth-child(6) .card-icon {
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    color: #4338ca;
+}
+
+.tool-card:nth-child(7) .card-icon {
+    background: linear-gradient(135deg, #ffedd5, #fed7aa);
+    color: #ea580c;
+}
+
 
 .tool-card:hover .card-icon {
     transform: scale(1.05);

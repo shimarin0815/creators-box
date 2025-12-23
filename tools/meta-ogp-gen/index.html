@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Tag Manager / Analytics if needed, copying from other tools -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WXMCP3D8W6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-WXMCP3D8W6');
+    </script>
+
+    <!-- SEO Meta Tags -->
+    <title>Metaタグ & OGP 生成・プレビューツール - SEO/SNS最適化 | Creators Box</title>
+    <meta name="description"
+        content="SEO用MetaタグとOGP（Twitterカード含む）をリアルタイムプレビューしながら生成。Web制作やノーコードツール（Webflow/Studio）での設定に最適。">
+    <meta name="keywords" content="Metaタグ生成, OGP生成, Twitterカードプレビュー, SEOツール, Web制作">
+    <meta name="author" content="Creators Box">
+
+    <!-- OGP Tags -->
+    <meta property="og:title" content="Metaタグ & OGP 生成・プレビューツール">
+    <meta property="og:description" content="SEO/OGPタグを簡単生成＆リアルタイムプレビュー。">
+    <meta property="og:type" content="website">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="../../" class="site-name">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Creators Box
+                </a>
+                <h1 class="tool-name">Metaタグ & OGP 生成・プレビュー</h1>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="tool-layout">
+                <!-- Input Column -->
+                <section class="input-column">
+                    <div class="card-base input-panel">
+                        <h2>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                            設定入力
+                        </h2>
+
+                        <!-- Basic Info -->
+                        <div class="form-group">
+                            <label for="pageTitle">ページタイトル (title / og:title)</label>
+                            <input type="text" id="pageTitle" class="form-input" placeholder="例: 素晴らしいウェブサイト">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="label-row">
+                                <label for="pageDesc">ディスクリプション (description)</label>
+                                <span class="char-count" id="descCount">0 / 120 (推奨)</span>
+                            </div>
+                            <textarea id="pageDesc" class="form-textarea" rows="4"
+                                placeholder="サイトの説明文を入力してください..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pageUrl">ページURL (og:url)</label>
+                            <input type="url" id="pageUrl" class="form-input" placeholder="https://example.com/page">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="siteName">サイト名 (og:site_name)</label>
+                            <input type="text" id="siteName" class="form-input" placeholder="例: My Brand">
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- OGP Image -->
+                        <div class="form-group">
+                            <label for="ogpImage">OGP画像 URL (og:image)</label>
+                            <input type="url" id="ogpImage" class="form-input"
+                                placeholder="https://example.com/ogp.png">
+                            <p class="help-text">※画像をアップロードする機能はありません。画像のURLを入力してください。</p>
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- Twitter Card -->
+                        <div class="form-group">
+                            <label>Twitterカードタイプ</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="cardType" value="summary_large_image" checked>
+                                    大きい画像 (summary_large_image)
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="cardType" value="summary">
+                                    小さい画像 (summary)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="twitterSite">Twitterユーザー名 (twitter:site / creator)</label>
+                            <div class="input-with-prefix">
+                                <span>@</span>
+                                <input type="text" id="twitterSite" class="form-input" placeholder="username">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Preview & Code Column -->
+                <section class="preview-column">
+                    <!-- Google Preview -->
+                    <div class="preview-block">
+                        <h3 class="preview-label">Google 検索結果プレビュー</h3>
+                        <div class="google-preview-card">
+                            <div class="google-url-row">
+                                <div class="google-icon-circle">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path
+                                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="google-site-info">
+                                    <div class="google-site-name" id="prevGoogleSiteName">My Brand</div>
+                                    <div class="google-url" id="prevGoogleUrl">https://example.com › page</div>
+                                </div>
+                                <div class="google-dots">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                                        <path
+                                            d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="google-title" id="prevGoogleTitle">ページタイトル</div>
+                            <div class="google-desc" id="prevGoogleDesc">
+                                ページのメタディスクリプションがここに表示されます。Googleの検索結果では120文字程度まで表示されることが多いですが、デバイスによって異なります。</div>
+                        </div>
+                    </div>
+
+                    <!-- Twitter Preview -->
+                    <div class="preview-block">
+                        <h3 class="preview-label">Twitter (X) カードプレビュー</h3>
+                        <!-- Large Image -->
+                        <div class="twitter-card large" id="twitterCardPreview">
+                            <div class="twitter-image-area">
+                                <img src="" alt="OGP Image" id="prevTwitterImg" style="display:none;">
+                                <div class="no-image-placeholder" id="prevTwitterImgPlaceholder">No Image</div>
+                            </div>
+                            <div class="twitter-content-area">
+                                <div class="twitter-domain" id="prevTwitterDomain">example.com</div>
+                                <div class="twitter-title" id="prevTwitterTitle">ページタイトル</div>
+                                <div class="twitter-desc" id="prevTwitterDesc">ページの説明文</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Output -->
+                    <div class="card-base output-panel">
+                        <div class="output-header">
+                            <h3>生成されたコード</h3>
+                            <button class="btn-copy" id="copyBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                コードをコピー
+                            </button>
+                        </div>
+                        <div class="output-options">
+                            <label>
+                                <input type="checkbox" id="excludeTwitter"> Twitterカードを含めない
+                            </label>
+                        </div>
+                        <textarea id="codeOutput" readonly class="code-textarea"></textarea>
+                    </div>
+                </section>
+            </div>
+
+            <!-- SEO Article -->
+            <article class="article-section">
+                <hr class="section-divider">
+                <div class="article-content">
+                    <h2>Metaタグ・OGPツールの使い方</h2>
+                    <p>
+                        Webサイトやブログ記事を公開する際、SEO（検索エンジン最適化）やSNSでのシェア時に意図した通りに情報を伝えるためには、適切なMetaタグ設定が不可欠です。
+                        このツールを使えば、必要な情報を入力するだけで、<code>&lt;head&gt;</code>内に貼り付けるタグを一括生成できます。
+                    </p>
+                    <h3>主な機能</h3>
+                    <ul>
+                        <li><strong>リアルタイムプレビュー:</strong> 入力した内容がGoogle検索結果やX（旧Twitter）のタイムラインでどう見えるかを即座に確認できます。</li>
+                        <li><strong>文字数カウント:</strong> ディスクリプションが長すぎて省略されないよう、文字数をチェックしながら作成できます。</li>
+                        <li><strong>画像確認:</strong> OGP画像URLを入力すると、プレビューに反映されるため、画像の見切れなどを事前にチェックできます。</li>
+                    </ul>
+                    <p class="note">※このツールはサーバーにデータを送信せず、すべての処理をお使いのブラウザ内で行います。</p>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-copy">&copy; 2025 Creators Box</p>
+                <nav class="footer-links">
+                    <a href="../../" class="footer-link">ホーム</a>
+                    <a href="../../privacy.html" class="footer-link">プライバシーポリシー</a>
+                </nav>
+            </div>
+            <p class="footer-note">
+                ※当サイトのツールはブラウザ内で処理が完結します。データがサーバーに送信されることはありません。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">コピーしました！</div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
