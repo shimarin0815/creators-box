@@ -608,3 +608,104 @@ button:focus-visible {
         border-width: 3px;
     }
 }
+
+/* === About Creator Section === */
+.about-creator {
+    background-color: #f9f9f9;
+    padding: var(--spacing-4xl) 0;
+    text-align: center;
+    border-top: 1px solid var(--color-border-subtle);
+}
+
+.about-creator-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.creator-profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+    border: 3px solid white;
+}
+
+.creator-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+}
+
+.creator-bio {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+}
+
+.creator-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.creator-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    background-color: white;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+}
+
+.creator-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+/* Specific Brand Colors on Hover (Optional, but nice) */
+.creator-link.note:hover {
+    color: #41C9B4;
+    border-color: #41C9B4;
+}
+
+.creator-link.x-twitter:hover {
+    color: #000000;
+    border-color: #000000;
+}
+
+.creator-link.github:hover {
+    color: #333333;
+    border-color: #333333;
+}
+
+@media (min-width: 768px) {
+    .mobile-only {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .mobile-only {
+        display: block;
+    }
+
+    .about-creator {
+        padding: var(--spacing-3xl) 0;
+    }
+}
