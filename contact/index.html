@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>お問い合わせ | Creators Box</title>
+    <meta name="description" content="Creators Boxへのお問い合わせはこちらから。">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../style.css?v=2.1">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Header Styles from subpages to ensure consistency */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--spacing-lg) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .site-name {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--color-primary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: color var(--transition-fast);
+        }
+
+        .site-name:hover {
+            color: var(--color-primary-hover);
+        }
+
+        .site-name svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .page-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="../index.html" class="site-name">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Creators Box
+                </a>
+                <h1 class="page-title">お問い合わせ</h1>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main style="background-color: #f8fafc; padding: 40px 20px; min-height: 80vh;">
+        <div
+            style="max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+
+            <h1 style="text-align: center; color: #2d3748; margin-bottom: 30px; font-size: 1.8rem;">お問い合わせ</h1>
+            <p style="text-align: center; margin-bottom: 20px; font-size: 0.9rem; color: #718096;">
+                ご質問・ご要望は以下のフォームよりお送りください。<br>
+                ※フォームが表示されない場合は、ページを再読み込みしてください。
+            </p>
+
+            <div style="width: 100%; overflow: hidden;">
+                <iframe
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSdTWuliN6af5o-KLMda0CCRF_c6TfmsW4b46cvGXWh0Gx5pag/viewform?embedded=true"
+                    width="100%" height="949" frameborder="0" marginheight="0" marginwidth="0"
+                    title="Creators Box お問い合わせフォーム" style="border: none; max-width: 100%;">
+                    読み込んでいます…
+                </iframe>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-copy">&copy; 2025 Creators Box</p>
+                <nav class="footer-links">
+                    <a href="../index.html" class="footer-link">ホーム</a>
+                    <a href="../privacy-policy/index.html" class="footer-link">プライバシーポリシー</a>
+                </nav>
+            </div>
+            <p class="footer-note">
+                ※当サイトのツールはブラウザ内で処理が完結します。データがサーバーに送信されることはありません。
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
