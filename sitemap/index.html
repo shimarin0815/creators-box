@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
-<!-- Build trigger: 2025-12-25 Retrying deployment -->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO Meta Tags -->
-    <title>お問い合わせ | Creators Box</title>
-    <meta name="description" content="Creators Boxへのお問い合わせはこちらから。">
+    <title>サイトマップ | Creators Box</title>
+    <meta name="description" content="Creators Boxのサイトマップページです。">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="../style.css?v=2.1">
@@ -19,7 +18,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Header Styles from subpages to ensure consistency */
         .header {
             background: white;
             border-bottom: 1px solid var(--color-border);
@@ -72,10 +70,40 @@
             text-align: center;
         }
 
-        @media (min-width: 768px) {
-            .page-title {
-                font-size: 1.75rem;
-            }
+        .sitemap-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .sitemap-item {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .sitemap-item:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-2px);
+        }
+
+        .sitemap-link {
+            text-decoration: none;
+            color: var(--color-text-primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sitemap-link:hover {
+            color: var(--color-primary);
         }
     </style>
 </head>
@@ -93,31 +121,46 @@
                     </svg>
                     Creators Box
                 </a>
-                <h1 class="page-title">お問い合わせ</h1>
+                <h1 class="page-title">サイトマップ</h1>
             </nav>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main style="background-color: #f8fafc; padding: 40px 20px; min-height: 80vh;">
-        <div
-            style="max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-
-            <h1 style="text-align: center; color: #2d3748; margin-bottom: 30px; font-size: 1.8rem;">お問い合わせ</h1>
-            <p style="text-align: center; margin-bottom: 20px; font-size: 0.9rem; color: #718096;">
-                ご質問・ご要望は以下のフォームよりお送りください。<br>
-                ※フォームが表示されない場合は、ページを再読み込みしてください。
-            </p>
-
-            <div style="width: 100%; overflow: hidden;">
-                <iframe
-                    src="https://docs.google.com/forms/d/e/1FAIpQLSdTWuliN6af5o-KLMda0CCRF_c6TfmsW4b46cvGXWh0Gx5pag/viewform?embedded=true"
-                    width="100%" height="949" frameborder="0" marginheight="0" marginwidth="0"
-                    title="Creators Box お問い合わせフォーム" style="border: none; max-width: 100%;">
-                    読み込んでいます…
-                </iframe>
-            </div>
-
+    <main class="main-content">
+        <div class="container" style="padding: 2rem 1rem;">
+            <ul class="sitemap-list">
+                <li class="sitemap-item">
+                    <a href="../index.html" class="sitemap-link">TOPページ (Creators Box)</a>
+                </li>
+                <li class="sitemap-item">
+                    <a href="../diff-checker/" class="sitemap-link">画像差分 (Diff) 検出ツール</a>
+                </li>
+                <li class="sitemap-item">
+                    <a href="../tailwind-sorter/" class="sitemap-link">Tailwind Class Sorter</a>
+                </li>
+                <li class="sitemap-item">
+                    <a href="../unit-converter/" class="sitemap-link">Web Unit Converter</a>
+                </li>
+                <li class="sitemap-item">
+                    <a href="../tools/text-counter/" class="sitemap-link">文字数・行数カウンター</a>
+                </li>
+                <li class="sitemap-item">
+                    <a href="../tools/feedback-gen/" class="sitemap-link">修正指示ジェネレーター</a>
+                </li>
+                <li class="sitemap-item">
+                    <a href="../tools/invoice-maker/" class="sitemap-link">プライバシー請求書メーカー</a>
+                </li>
+                <li class="sitemap-item">
+                    <a href="../tools/meta-ogp-gen/" class="sitemap-link">Meta & OGP 生成ツール</a>
+                </li>
+                <li class="sitemap-item">
+                    <a href="../contact/" class="sitemap-link">お問い合わせ</a>
+                </li>
+                <li class="sitemap-item">
+                    <a href="../privacy-policy/" class="sitemap-link">プライバシーポリシー</a>
+                </li>
+            </ul>
         </div>
     </main>
 
@@ -128,9 +171,9 @@
                 <p class="footer-copy">&copy; 2025 Creators Box</p>
                 <nav class="footer-links">
                     <a href="../index.html" class="footer-link">ホーム</a>
-                    <a href="#" class="footer-link">お問い合わせ</a>
-                    <a href="../privacy-policy/index.html" class="footer-link">プライバシーポリシー</a>
-                    <a href="../sitemap/index.html" class="footer-link">サイトマップ</a>
+                    <a href="../contact/" class="footer-link">お問い合わせ</a>
+                    <a href="../privacy-policy/" class="footer-link">プライバシーポリシー</a>
+                    <a href="#" class="footer-link">サイトマップ</a>
                 </nav>
             </div>
             <p class="footer-note">
