@@ -281,6 +281,65 @@
             font-size: 0.9375rem;
             line-height: 1.6;
         }
+
+        /* Tool Article Section */
+        .tool-article-section {
+            background-color: #ffffff;
+            color: #333333;
+            padding: 40px 20px;
+            margin-top: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .tool-article-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+            border-bottom: 2px solid #8b5cf6;
+            padding-bottom: 0.5rem;
+        }
+
+        .tool-article-section h2:first-child {
+            margin-top: 0;
+        }
+
+        .tool-article-section p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #333333;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .faq-answer {
+            color: #333333;
+            padding-left: 1.5rem;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 640px) {
+            .tool-article-section {
+                padding: 30px 15px;
+            }
+        }
     </style>
 </head>
 
@@ -397,22 +456,50 @@
             </section>
 
             <!-- Article Section (SEO & AdSense) -->
-            <article class="article-section">
-                <h2 class="article-title">修正指示ジェネレーターの活用シーン</h2>
+            <article class="tool-article-section">
+                <h2>「伝わらない」ストレスをゼロにする指示作成ツール</h2>
+                <p>
+                    Web制作やデザインの現場で、「修正箇所の意図が伝わらない」「指示が曖昧で手戻りが発生する」といった問題に悩まされていませんか？
+                    修正指示ジェネレーターは、そんなコミュニケーションの課題を解決するために開発されました。
+                    画面上の項目を埋めていくだけで、誰でもプロのディレクターのような「明確で」「角が立たない」指示文を作成することができます。
+                    曖昧さを排除し、制作チーム全員が気持ちよく作業できる環境作りをサポートします。
+                </p>
 
-                <section class="article-block">
-                    <h3 class="article-subtitle">チーム連携の効率化に最適</h3>
-                    <p class="article-text">
-                        Web制作の現場では、ディレクターからエンジニアやデザイナーへの修正指示が頻繁に発生します。このツールを使えば、修正箇所・重要度・具体的な内容を整ったフォーマットで自動生成できるため、SlackやChatworkにそのまま貼り付けるだけで伝達が完了します。口頭やメモ書きでは伝わりにくい細かなニュアンスも、テキスト化することで正確に共有でき、認識のズレを防ぎます。複数の修正項目をまとめて一覧化できるため、優先順位も一目瞭然。チーム全体の作業効率が大幅に向上します。
-                    </p>
-                </section>
+                <h2>Slack・Chatwork・Teamsに最適化</h2>
+                <p>
+                    生成されるテキストは、Markdown記法や装飾を用いて、主要なビジネスチャットツール（Slack, Chatwork, Microsoft
+                    Teamsなど）で見やすく表示されるように最適化されています。
+                    「コピー」ボタンをワンクリックするだけでクリップボードに保存されるため、あとはチャット画面に貼り付けるだけ。
+                    手動でフォーマットを整える時間を削減し、本来のクリエイティブな業務や重要な意思決定に集中する時間を創出します。
+                </p>
 
-                <section class="article-block">
-                    <h3 class="article-subtitle">クライアントへのフィードバックにも活用</h3>
-                    <p class="article-text">
-                        制作物をクライアントに納品する際、修正依頼を受けることは日常茶飯事です。このツールを使えば、クライアントからの口頭指示やメール内容を整理し、社内チームに正確に伝達できます。また、逆にクライアントへ修正提案を行う際にも、このフォーマットを使うことで「どこを・なぜ・どう修正すべきか」が明確になり、提案の説得力が増します。ブラウザ完結型なので、機密性の高いプロジェクト情報も安心して扱えます。修正履歴としてテキストを保存しておけば、後から振り返る際にも便利です。
-                    </p>
-                </section>
+                <h2>状況に応じたテンプレート活用</h2>
+                <p>
+                    「デザインの微調整」「バグの報告」「テキストの差し替え」など、修正依頼の内容は多岐にわたります。
+                    本ツールは、あらゆるシーンに対応できる汎用性の高いフォーマットを採用しています。
+                    各項目は自由に入力・編集が可能なので、プロジェクト独自のルールや、緊急度に応じた使い分けも柔軟に行えます。
+                    新人ディレクターの教育ツールとしても、ベテランの時短ツールとしても効果を発揮します。
+                </p>
+
+                <h2>よくある質問 (FAQ)</h2>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q.</span> 入力した指示内容は保存されますか？
+                    </div>
+                    <div class="faq-answer">
+                        <span>A.</span>
+                        いいえ、入力されたデータはすべてお使いのブラウザ内でのみ処理されます。外部サーバーに送信・保存されることは一切ありませんので、機密性の高いプロジェクトでも安心してご利用いただけます。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q.</span> スマホからでも使えますか？
+                    </div>
+                    <div class="faq-answer">
+                        <span>A.</span>
+                        はい、スマートフォンやタブレットにも対応したレスポンシブデザインを採用しています。外出先や移動中に急いで指示を出したい場合でも、スマホから快適に作成・コピーが可能です。
+                    </div>
+                </div>
             </article>
         </div>
     </main>
