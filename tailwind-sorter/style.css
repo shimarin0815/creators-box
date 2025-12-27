@@ -9,7 +9,7 @@
     --color-primary: #3b82f6;
     --color-primary-hover: #2563eb;
     --color-primary-light: #dbeafe;
-    
+
     /* Neutrals */
     --color-background: #ffffff;
     --color-surface: #f9fafb;
@@ -17,11 +17,11 @@
     --color-text-primary: #111827;
     --color-text-secondary: #6b7280;
     --color-text-muted: #9ca3af;
-    
+
     /* Functional Colors */
     --color-success: #10b981;
     --color-error: #ef4444;
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 0.75rem;
@@ -29,21 +29,21 @@
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
-    
+
     /* Typography */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    
+
     /* Border Radius */
     --radius-sm: 0.375rem;
     --radius-md: 0.5rem;
     --radius-lg: 0.75rem;
-    
+
     /* Transitions */
     --transition-fast: 150ms ease;
     --transition-base: 200ms ease;
@@ -343,15 +343,15 @@ button:focus-visible {
         justify-content: space-between;
         text-align: left;
     }
-    
+
     .tool-title {
         font-size: 2rem;
     }
-    
+
     .editor-grid {
         grid-template-columns: 1fr 1fr;
     }
-    
+
     .code-editor {
         min-height: 300px;
     }
@@ -361,7 +361,7 @@ button:focus-visible {
     .code-editor {
         min-height: 400px;
     }
-    
+
     .tool-interface {
         padding: var(--spacing-2xl);
     }
@@ -372,23 +372,23 @@ button:focus-visible {
     .container {
         padding: 0 var(--spacing-md);
     }
-    
+
     .site-header {
         padding: var(--spacing-md) 0;
     }
-    
+
     .tool-title {
         font-size: 1.25rem;
     }
-    
+
     .tool-interface {
         padding: var(--spacing-md);
     }
-    
+
     .btn-primary {
         width: 100%;
     }
-    
+
     .toast {
         bottom: var(--spacing-md);
         right: var(--spacing-md);
@@ -410,8 +410,65 @@ button:focus-visible {
     .code-editor {
         border-width: 3px;
     }
-    
+
     button {
         border: 2px solid currentColor;
     }
+}
+
+/* === Tool Article Section (Added for SEO) === */
+.tool-article-section {
+    background-color: #ffffff;
+    color: #333333;
+    padding: 40px 20px;
+    margin-top: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+}
+
+.tool-article-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.tool-article-section h2:first-child {
+    margin-top: 0;
+}
+
+.tool-article-section p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.tool-article-section code {
+    background-color: var(--color-surface);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--color-primary);
+}
+
+.tool-article-section dl {
+    margin-top: 1.5rem;
+}
+
+.tool-article-section dt {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #111;
+    font-size: 1.1rem;
+}
+
+.tool-article-section dd {
+    margin-left: 0;
+    margin-bottom: 2rem;
+    color: #333;
 }
