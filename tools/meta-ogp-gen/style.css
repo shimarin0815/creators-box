@@ -527,3 +527,45 @@ label {
     border-radius: 8px;
     margin-top: 2rem;
 }
+
+/* Tool Article Section */
+.tool-article-section {
+    background-color: #ffffff;
+    color: #333333;
+    padding: 40px 20px;
+    margin-top: 4rem;
+    border-radius: 12px;
+}
+
+.tool-article-section h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    line-height: 1.4;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 0.5rem;
+}
+
+.tool-article-section h2:first-child {
+    margin-top: 0;
+}
+
+.tool-article-section p {
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+.tool-article-section ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.tool-article-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+    color: #333;
+}
