@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>プライバシー請求書・見積書メーカー | Creators Box</title>
     <meta name="description" content="登録不要・サーバー送信なし。ブラウザだけで完結するセキュアなインボイス対応請求書・見積書・納品書作成ツール。PDFで即時発行。">
-    
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="style.css">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
 
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
+
 <body>
     <header class="tool-header">
         <div class="container header-inner">
             <a href="../../index.html" class="back-link">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
                 Creators Box
             </a>
@@ -40,8 +45,11 @@
                     <h2>書類編集</h2>
                     <p class="privacy-note">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
-                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="currentColor" stroke-width="2" />
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
                         データはサーバーに送信されず、ブラウザ内のみで処理されます
                     </p>
@@ -76,15 +84,18 @@
                         <div class="accordion-content">
                             <div class="form-group">
                                 <label>屋号 / 名前</label>
-                                <input type="text" id="issuerName" class="input-light" placeholder="例: 山田 太郎 / Studio Web" value="Studio Web">
+                                <input type="text" id="issuerName" class="input-light"
+                                    placeholder="例: 山田 太郎 / Studio Web" value="Studio Web">
                             </div>
                             <div class="form-group">
                                 <label>インボイス登録番号 (T+13桁)</label>
-                                <input type="text" id="issuerReg" class="input-light" placeholder="例: T1234567890123" maxlength="14">
+                                <input type="text" id="issuerReg" class="input-light" placeholder="例: T1234567890123"
+                                    maxlength="14">
                             </div>
                             <div class="form-group">
                                 <label>住所・連絡先</label>
-                                <textarea id="issuerAddress" class="input-light textarea-sm" placeholder="〒000-0000 東京都...&#10;Tel: 090-0000-0000&#10;Email: info@example.com"></textarea>
+                                <textarea id="issuerAddress" class="input-light textarea-sm"
+                                    placeholder="〒000-0000 東京都...&#10;Tel: 090-0000-0000&#10;Email: info@example.com"></textarea>
                             </div>
                             <div class="form-group">
                                 <label>印影画像 (PNG/JPG)</label>
@@ -132,7 +143,8 @@
                             </div>
                             <div class="form-group">
                                 <label>振込先情報</label>
-                                <textarea id="bankInfo" class="input-light textarea-sm" placeholder="銀行名 支店名&#10;口座種別 口座番号&#10;口座名義"></textarea>
+                                <textarea id="bankInfo" class="input-light textarea-sm"
+                                    placeholder="銀行名 支店名&#10;口座種別 口座番号&#10;口座名義"></textarea>
                             </div>
                         </div>
                     </div>
@@ -184,9 +196,13 @@
                 <div class="preview-actions">
                     <button type="button" id="downloadPdfBtn" class="btn-primary">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
                         PDFとして保存
                     </button>
@@ -200,7 +216,8 @@
                             <div class="invoice-meta">
                                 <div class="meta-row">
                                     <span class="meta-label">No.</span>
-                                    <span class="meta-value edit-on-click" contenteditable="true" id="invoiceNumber">20251223-01</span>
+                                    <span class="meta-value edit-on-click" contenteditable="true"
+                                        id="invoiceNumber">20251223-01</span>
                                 </div>
                                 <div class="meta-row">
                                     <span class="meta-label">発行日</span>
@@ -266,7 +283,8 @@
                                     <tr id="rowWithholding" class="hidden">
                                         <td colspan="2" class="no-border"></td>
                                         <td class="td-summary-label">源泉徴収税</td>
-                                        <td class="td-summary-val text-red">- ¥ <span id="previewWithholdingAmount">0</span></td>
+                                        <td class="td-summary-val text-red">- ¥ <span
+                                                id="previewWithholdingAmount">0</span></td>
                                     </tr>
                                     <tr class="tr-total">
                                         <td colspan="2" class="no-border"></td>
@@ -292,6 +310,61 @@
         </div>
     </main>
 
+    <section class="tool-article-section">
+        <div class="container">
+            <article>
+                <h2>売上データは「あなたの手元」だけに。究極のセキュリティ</h2>
+                <p>
+                    「プライバシー請求書メーカー」は、その名の通り、ユーザーのプライバシー保護を最優先に設計された無料の請求書作成ツールです。
+                    一般的なクラウド型請求書サービスとは異なり、このツールは入力されたデータを外部サーバーに一切送信しません。
+                </p>
+                <p>
+                    顧客名、金額、口座情報、個人の連絡先といった機密情報は、すべてお使いのブラウザ（PCやスマートフォン）の中だけで処理されます。
+                    PDFファイルの生成処理もJavaScriptを使ってクライアントサイドで行われるため、第三者にデータが漏洩するリスクは理論上ゼロです。
+                    「クラウドに顧客データを預けるのは不安」「登録不要でサクッと使い捨てたい」というフリーランスや個人事業主の方に最適なソリューションです。
+                </p>
+
+                <h2>インボイス制度対応のフォーマット（登録番号対応）</h2>
+                <p>
+                    2023年10月から開始されたインボイス制度（適格請求書等保存方式）に完全対応しています。
+                    適格請求書発行事業者登録番号（T番号）の入力欄を標準装備しており、税率ごとの区分記載（10%・8%の税区分）や消費税額の計算も自動で行われます。
+                </p>
+                <p>
+                    面倒な会員登録やログイン手続きは一切不要です。ブラウザのブックマークから開くだけで、すぐに実務や確定申告で使える正式なフォーマットの請求書や見積書を作成できます。
+                    源泉徴収税（10.21%）の自動計算機能も搭載しているため、源泉徴収が必要なライターやデザイナー等の職種の方にも便利にお使いいただけます。
+                </p>
+
+                <h2>郵送代行不要、PDFで即ダウンロード</h2>
+                <p>
+                    本ツールは、複雑な機能（郵送代行、入金消込、売上レポート機能など）を極限まで削ぎ落とし、「PDFを作ってダウンロードする」ことだけに特化しました。
+                    その結果、動作は非常に軽量で、直感的な操作感を実現しています。
+                </p>
+                <p>
+                    作成した書類は、ワンクリックでPDFファイルとしてダウンロード可能です。
+                    あとはメールやチャットツール（Slack, Chatwork等）でクライアントに送付するだけ。
+                    紙での郵送が必要な場合も、ダウンロードしたPDFをご自宅のプリンターやコンビニプリントで印刷するだけで対応できます。
+                </p>
+
+                <h2>よくある質問 (FAQ)</h2>
+                <div class="faq-box">
+                    <div class="faq-q">作成したデータは保存できますか？</div>
+                    <div class="faq-a">
+                        セキュリティ重視のため、サーバーへのデータ保存機能はありません。
+                        ただし、ブラウザの一時的なキャッシュ（ローカルストレージなど）に入力内容が残る場合がありますが、基本的には「ページを閉じるとリセットされる」または「都度入力する」仕様です。
+                        同じ内容で再発行したい場合は、ウィンドウを閉じずに続けて編集するか、PDFを手元に保管してください。
+                    </div>
+                </div>
+                <div class="faq-box">
+                    <div class="faq-q">スマートフォンでも作成できますか？</div>
+                    <div class="faq-a">
+                        はい、レスポンシブ対応によりスマートフォンやタブレットからでもご利用いただけます。
+                        外出先や移動中に急ぎで請求書を発行したい場合でも、スマホのブラウザからアクセスして、PDFを生成・保存することが可能です。
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
     <footer class="tool-footer">
         <div class="container">
             <p>&copy; 2025 Creators Box</p>
@@ -300,4 +373,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -458,3 +458,86 @@ input[type="color"]::-webkit-color-swatch {
     border-bottom: 1px solid var(--primary-color);
     background: #f0f9ff;
 }
+
+/* SEO Article Section */
+.tool-article-section {
+    background-color: #ffffff;
+    color: #333333;
+    padding: 60px 20px;
+    margin-top: 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+.tool-article-section .container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.tool-article-section h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #efefef;
+    color: #111;
+}
+
+.tool-article-section h2:first-child {
+    margin-top: 0;
+}
+
+.tool-article-section p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #444;
+}
+
+.tool-article-section ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5em;
+    list-style-type: disc;
+}
+
+.tool-article-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+}
+
+.faq-box {
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.faq-q {
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+}
+
+.faq-q::before {
+    content: "Q.";
+    color: var(--primary-color);
+    font-weight: 900;
+    margin-right: 0.5rem;
+}
+
+.faq-a {
+    color: #4b5563;
+    line-height: 1.6;
+    display: flex;
+    align-items: flex-start;
+}
+
+.faq-a::before {
+    content: "A.";
+    color: #ef4444;
+    font-weight: 900;
+    margin-right: 0.5rem;
+}
