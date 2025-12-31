@@ -275,25 +275,39 @@
                                         Markdown
                                     </button>
                                 </div>
-                                <button @click="copyToClipboard"
-                                    class="text-white hover:bg-primary bg-primary/90 px-4 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                                    <span v-if="!copied">
+                                <div class="flex items-center gap-2">
+                                    <button @click="downloadHtml"
+                                        class="text-gray-300 hover:text-white hover:bg-gray-700 px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-1.5 border border-gray-600">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round">
-                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="7 10 12 15 17 10"></polyline>
+                                            <line x1="12" y1="15" x2="12" y2="3"></line>
                                         </svg>
-                                    </span>
-                                    <span v-else>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg>
-                                    </span>
-                                    {{ copied ? 'コピーしました' : 'コピー' }}
-                                </button>
+                                        保存
+                                    </button>
+                                    <button @click="copyToClipboard"
+                                        class="text-white hover:bg-primary bg-primary/90 px-4 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
+                                        <span v-if="!copied">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                        <span v-else>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </span>
+                                        {{ copied ? 'コピー' : 'コピー' }}
+                                    </button>
+                                </div>
                             </div>
 
                             <!-- Editor Area -->
@@ -312,59 +326,83 @@
                         </div>
 
                         <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 text-sm text-blue-800">
-                            <div class="flex items-start gap-2">
-                                <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
+                            <h5 class="font-bold flex items-center gap-2 mb-2">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <p>
-                                    <strong>ヒント:</strong> 生成されたコードをあなたのサイトの「アクセシビリティ方針」ページ（例:
-                                    <code>/accessibility.html</code>）に貼り付けて公開してください。
-                                </p>
-                            </div>
+                                完成後のステップ
+                            </h5>
+                            <ol class="list-decimal list-inside space-y-1 ml-1 text-blue-900/80">
+                                <li><strong>保存:</strong> 「保存」ボタンでHTMLファイルをダウンロードします。</li>
+                                <li><strong>アップロード:</strong> サーバーにアップロードします（例: <code>accessibility.html</code>）</li>
+                                <li><strong>リンク:</strong> サイトのフッターからリンクを貼って完了です！</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
 
                 <!-- SEO Content Article -->
                 <article
-                    class="mt-20 bg-white rounded-xl shadow-sm border border-gray-100 p-8 md:p-12 max-w-4xl mx-auto">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">なぜアクセシビリティ方針が必要なのか？法改正とWebサイト</h2>
+                    class="mt-12 bg-white rounded-xl shadow-sm border border-gray-100 max-w-4xl mx-auto overflow-hidden">
+                    <details class="group">
+                        <summary
+                            class="flex items-center justify-between p-6 md:p-8 cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-blue-100 p-2 rounded-full text-primary">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                    </svg>
+                                </div>
+                                <h2 class="text-lg md:text-xl font-bold text-gray-800">なぜアクセシビリティ方針が必要なのか？ (クリックで読む)
+                                </h2>
+                            </div>
+                            <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </summary>
 
-                    <div class="space-y-6 text-gray-600 leading-relaxed">
-                        <section>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-3">障害者差別解消法の改正と「合理的配慮」</h3>
-                            <p>
-                                2024年4月1日に施行された「改正障害者差別解消法」により、行政機関だけでなく、民間事業者に対しても障害者への「合理的配慮の提供」が義務化されました。これにはWebサイトやアプリケーションのアクセシビリティ確保も含まれると考えられています。
-                            </p>
-                            <p class="mt-2">
-                                Webサイトにおける「合理的配慮」とは、障害のある方が情報を取得・利用しようとした際に、何らかの障壁（バリア）がある場合、そのバリアを取り除くための手段を提供することを指します。例えば、問い合わせフォームがスクリーンリーダーで読めない場合に電話対応を受け付けることや、動画に字幕がない場合に代替テキストを提供することなどが挙げられます。
-                            </p>
-                        </section>
+                        <div class="p-8 md:p-12 border-t border-gray-100 space-y-6 text-gray-600 leading-relaxed">
+                            <section>
+                                <h3 class="text-xl font-semibold text-gray-700 mb-3">障害者差別解消法の改正と「合理的配慮」</h3>
+                                <p>
+                                    2024年4月1日に施行された「改正障害者差別解消法」により、行政機関だけでなく、民間事業者に対しても障害者への「合理的配慮の提供」が義務化されました。これにはWebサイトやアプリケーションのアクセシビリティ確保も含まれると考えられています。
+                                </p>
+                                <p class="mt-2">
+                                    Webサイトにおける「合理的配慮」とは、障害のある方が情報を取得・利用しようとした際に、何らかの障壁（バリア）がある場合、そのバリアを取り除くための手段を提供することを指します。例えば、問い合わせフォームがスクリーンリーダーで読めない場合に電話対応を受け付けることや、動画に字幕がない場合に代替テキストを提供することなどが挙げられます。
+                                </p>
+                            </section>
 
-                        <section>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-3">アクセシビリティ方針を公開するメリット</h3>
-                            <p>
-                                すべてのWebサイトが今すぐに完璧なアクセシビリティ（JIS X 8341-3
-                                適合レベルAAなど）を達成することは、技術的・コスト的に難しい場合があります。しかし、重要なのは「現時点での対応状況」と「今後の取り組み」を誠実に明示することです。
-                            </p>
-                            <ul class="list-disc pl-5 mt-2 space-y-2">
-                                <li><strong>信頼性の向上:</strong> 誰にとっても使いやすいサイトを目指している姿勢を示すことで、ユーザーや社会からの信頼が高まります。</li>
-                                <li><strong>リスク管理:</strong> 現状の対応範囲を明確にすることで、トラブルを未然に防ぎ、具体的なフィードバックを受け入れやすくなります。</li>
-                                <li><strong>SEOへの効果:</strong>
-                                    アクセシビリティの高いサイトは、検索エンジンにとっても理解しやすい構造であることが多く、結果としてSEO評価にプラスに働きます。</li>
-                            </ul>
-                        </section>
+                            <section>
+                                <h3 class="text-xl font-semibold text-gray-700 mb-3">アクセシビリティ方針を公開するメリット</h3>
+                                <p>
+                                    すべてのWebサイトが今すぐに完璧なアクセシビリティ（JIS X 8341-3
+                                    適合レベルAAなど）を達成することは、技術的・コスト的に難しい場合があります。しかし、重要なのは「現時点での対応状況」と「今後の取り組み」を誠実に明示することです。
+                                </p>
+                                <ul class="list-disc pl-5 mt-2 space-y-2">
+                                    <li><strong>信頼性の向上:</strong> 誰にとっても使いやすいサイトを目指している姿勢を示すことで、ユーザーや社会からの信頼が高まります。</li>
+                                    <li><strong>リスク管理:</strong> 現状の対応範囲を明確にすることで、トラブルを未然に防ぎ、具体的なフィードバックを受け入れやすくなります。
+                                    </li>
+                                    <li><strong>SEOへの効果:</strong>
+                                        アクセシビリティの高いサイトは、検索エンジンにとっても理解しやすい構造であることが多く、結果としてSEO評価にプラスに働きます。</li>
+                                </ul>
+                            </section>
 
-                        <section>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-3">このツールの活用方法</h3>
-                            <p>
-                                この「A11y
-                                Fixer」は、専門的な知識がなくても、簡単なチェックリストに答えるだけで標準的なアクセシビリティ方針ページを作成できるツールです。現状で対応できている項目にはチェックを入れ、できていない項目については今後の対応予定や代替手段を記載することで、実態に即した誠実な方針文を作成できます。あなたのWebサイトでも、ぜひアクセシビリティへの取り組みを公開してみてください。
-                            </p>
-                        </section>
-                    </div>
+                            <section>
+                                <h3 class="text-xl font-semibold text-gray-700 mb-3">このツールの活用方法</h3>
+                                <p>
+                                    この「A11y
+                                    Fixer」は、専門的な知識がなくても、簡単なチェックリストに答えるだけで標準的なアクセシビリティ方針ページを作成できるツールです。現状で対応できている項目にはチェックを入れ、できていない項目については今後の対応予定や代替手段を記載することで、実態に即した誠実な方針文を作成できます。あなたのWebサイトでも、ぜひアクセシビリティへの取り組みを公開してみてください。
+                                </p>
+                            </section>
+                        </div>
+                    </details>
                 </article>
 
             </div>
@@ -569,6 +607,20 @@
                     }
                 };
 
+                const downloadHtml = () => {
+                    const content = generatedContent.value;
+                    const blob = new Blob([content], { type: 'text/html' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+
+                    // Simple filename generation
+                    const filename = outputFormat.value === 'html' ? 'accessibility_policy.html' : 'accessibility_policy.md';
+                    link.download = filename;
+
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                };
+
                 return {
                     siteName,
                     url,
@@ -581,7 +633,8 @@
                     outputFormat,
                     generatedContent,
                     copied,
-                    copyToClipboard
+                    copyToClipboard,
+                    downloadHtml
                 };
             }
         }).mount('#app');
