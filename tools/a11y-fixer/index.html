@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430823905768506"
+        crossorigin="anonymous"></script>
+    <!-- Google Analytics 4 -->
+    <!-- ユーザー設定用: G-XXXXXXXXXX を実際の測定IDに置換してください -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>A11y Fixer - ウェブアクセシビリティ方針ジェネレーター | Creators Box</title>
+    <meta name="description"
+        content="障害者差別解消法対応。チェックリストに答えるだけで、JIS X 8341-3準拠の「ウェブアクセシビリティ方針（宣言書）」を即座に作成できる無料ツール。Markdown/HTML出力対応。">
+    <meta name="keywords" content="ウェブアクセシビリティ方針, 生成ツール, JIS X 8341-3, 合理的配慮, 無料, 障害者差別解消法, a11y">
+    <meta name="author" content="Creators Box">
+
+    <!-- OGP Tags -->
+    <meta property="og:title" content="A11y Fixer - ウェブアクセシビリティ方針ジェネレーター">
+    <meta property="og:description" content="質問に答えるだけで、サイトの「ウェブアクセシビリティ方針」を自動生成。障害者差別解消法対応をサポートします。">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB', // Blue-600
+                        'primary-hover': '#1D4ED8', // Blue-700
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Vue.js 3 (Global Build) -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+            color: #334155;
+        }
+
+        /* Tooltip styles */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: 240px;
+            background-color: #1E293B;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -120px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            pointer-events: none;
+        }
+
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Custom scrollbar for preview area */
+        .preview-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .preview-scroll::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+
+        .preview-scroll::-webkit-scrollbar-thumb {
+            background-color: #CBD5E1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+            <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+                <a href="../../index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-gray-700">
+                        <path
+                            d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span class="font-bold text-lg text-gray-800">Creators Box</span>
+                </a>
+                <h1 class="text-sm md:text-base font-semibold text-gray-500">A11y Fixer</h1>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <div class="max-w-7xl mx-auto">
+
+                <div class="mb-8 text-center">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">ウェブアクセシビリティ方針ジェネレーター</h2>
+                    <p class="text-gray-500">チェックリストに答えるだけで、JIS規格に準拠した方針ページを自動生成します。</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+                    <!-- Left Column: Settings & Checklist -->
+                    <div class="space-y-6">
+                        <!-- Step 1: Basic Info -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 border-l-4 border-l-primary">
+                                <h3 class="font-bold text-gray-700">1. 基本情報</h3>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">サイト名</label>
+                                    <input type="text" v-model="siteName" placeholder="例: My Portfolio"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20 px-4 py-2 border">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">対象URL（ドメイン）</label>
+                                    <input type="text" v-model="url" placeholder="例: https://example.com"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20 px-4 py-2 border">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">目標とする適合レベル</label>
+                                    <select v-model="targetLevel"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20 px-4 py-2 border">
+                                        <option value="JIS X 8341-3:2016 レベルA">JIS X 8341-3:2016 レベルA</option>
+                                        <option value="JIS X 8341-3:2016 レベルAA">JIS X 8341-3:2016 レベルAA</option>
+                                        <option value="WCAG 2.1 Level AA">WCAG 2.1 Level AA</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Checklist -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div
+                                class="bg-gray-50 px-6 py-4 border-b border-gray-100 border-l-4 border-l-primary flex justify-between items-center">
+                                <h3 class="font-bold text-gray-700">2. 対応状況チェック</h3>
+                                <span class="text-xs text-gray-400">現在: {{ checkedCount }}項目クリア</span>
+                            </div>
+
+                            <div class="divide-y divide-gray-100">
+                                <div v-for="(category, catIndex) in checklist" :key="catIndex" class="p-6">
+                                    <h4 class="font-semibold text-gray-800 mb-4 flex items-center">
+                                        <span
+                                            class="w-6 h-6 rounded-full bg-blue-100 text-primary text-xs flex items-center justify-center mr-2">{{
+                                            catIndex + 1 }}</span>
+                                        {{ category.name }}
+                                    </h4>
+                                    <div class="space-y-3">
+                                        <div v-for="(item, itemIndex) in category.items" :key="itemIndex"
+                                            class="flex items-start">
+                                            <div class="flex h-5 items-center">
+                                                <input :id="'item-' + catIndex + '-' + itemIndex" type="checkbox"
+                                                    v-model="item.checked"
+                                                    class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer">
+                                            </div>
+                                            <div class="ml-3 text-sm">
+                                                <div class="flex items-center gap-1">
+                                                    <label :for="'item-' + catIndex + '-' + itemIndex"
+                                                        class="font-medium text-gray-700 cursor-pointer select-none">
+                                                        {{ item.label }}
+                                                    </label>
+
+                                                    <!-- Tooltip -->
+                                                    <div class="tooltip-container ml-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="text-gray-400 hover:text-primary cursor-help">
+                                                            <circle cx="12" cy="12" r="10"></circle>
+                                                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                                        </svg>
+                                                        <span class="tooltip-text">{{ item.desc }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Unimplemented Handling -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 border-l-4 border-l-primary">
+                                <h3 class="font-bold text-gray-700">3. 未対応項目・その他</h3>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">未対応項目の扱い</label>
+                                    <div class="flex items-center gap-4">
+                                        <label class="inline-flex items-center">
+                                            <input type="radio" v-model="unsupportedType" value="plan"
+                                                class="text-primary focus:ring-primary">
+                                            <span class="ml-2 text-sm text-gray-600">対応予定あり</span>
+                                        </label>
+                                        <label class="inline-flex items-center">
+                                            <input type="radio" v-model="unsupportedType" value="exclude"
+                                                class="text-primary focus:ring-primary">
+                                            <span class="ml-2 text-sm text-gray-600">技術的制約として除外</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div v-if="unsupportedType === 'plan'">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">対応予定時期（目安）</label>
+                                    <input type="text" v-model="targetDate" placeholder="例: 2025年12月頃"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20 px-4 py-2 border">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">お問い合わせ窓口（任意）</label>
+                                    <input type="text" v-model="contactInfo"
+                                        placeholder="例: contact@example.com または お問い合わせフォーム"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20 px-4 py-2 border">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Preview & Output -->
+                    <div class="lg:sticky lg:top-24 space-y-4">
+                        <div
+                            class="bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col h-[80vh] max-h-[800px]">
+                            <!-- Toolbar -->
+                            <div
+                                class="bg-gray-900 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+                                <div class="flex space-x-1 bg-gray-800 p-1 rounded-lg">
+                                    <button @click="outputFormat = 'html'"
+                                        :class="{'text-white bg-gray-700 shadow': outputFormat === 'html', 'text-gray-400 hover:text-gray-200': outputFormat !== 'html'}"
+                                        class="px-3 py-1.5 text-xs font-medium rounded-md transition-colors">
+                                        HTML
+                                    </button>
+                                    <button @click="outputFormat = 'markdown'"
+                                        :class="{'text-white bg-gray-700 shadow': outputFormat === 'markdown', 'text-gray-400 hover:text-gray-200': outputFormat !== 'markdown'}"
+                                        class="px-3 py-1.5 text-xs font-medium rounded-md transition-colors">
+                                        Markdown
+                                    </button>
+                                </div>
+                                <button @click="copyToClipboard"
+                                    class="text-white hover:bg-primary bg-primary/90 px-4 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
+                                    <span v-if="!copied">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </span>
+                                    <span v-else>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </span>
+                                    {{ copied ? 'コピーしました' : 'コピー' }}
+                                </button>
+                            </div>
+
+                            <!-- Editor Area -->
+                            <div
+                                class="flex-grow bg-[#1E1E1E] p-4 overflow-auto preview-scroll relative font-mono text-sm leading-relaxed text-gray-300">
+                                <pre
+                                    class="whitespace-pre-wrap select-all focus:outline-none"><code ref="codePreview">{{ generatedContent }}</code></pre>
+                            </div>
+
+                            <!-- Status Bar -->
+                            <div
+                                class="bg-gray-900 px-4 py-2 border-t border-gray-700 text-xs text-gray-500 flex justify-between">
+                                <span>{{ outputFormat === 'html' ? 'HTML Generated' : 'Markdown Generated' }}</span>
+                                <span>{{ generatedContent.length }} chars</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 text-sm text-blue-800">
+                            <div class="flex items-start gap-2">
+                                <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <p>
+                                    <strong>ヒント:</strong> 生成されたコードをあなたのサイトの「アクセシビリティ方針」ページ（例:
+                                    <code>/accessibility.html</code>）に貼り付けて公開してください。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEO Content Article -->
+                <article
+                    class="mt-20 bg-white rounded-xl shadow-sm border border-gray-100 p-8 md:p-12 max-w-4xl mx-auto">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">なぜアクセシビリティ方針が必要なのか？法改正とWebサイト</h2>
+
+                    <div class="space-y-6 text-gray-600 leading-relaxed">
+                        <section>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">障害者差別解消法の改正と「合理的配慮」</h3>
+                            <p>
+                                2024年4月1日に施行された「改正障害者差別解消法」により、行政機関だけでなく、民間事業者に対しても障害者への「合理的配慮の提供」が義務化されました。これにはWebサイトやアプリケーションのアクセシビリティ確保も含まれると考えられています。
+                            </p>
+                            <p class="mt-2">
+                                Webサイトにおける「合理的配慮」とは、障害のある方が情報を取得・利用しようとした際に、何らかの障壁（バリア）がある場合、そのバリアを取り除くための手段を提供することを指します。例えば、問い合わせフォームがスクリーンリーダーで読めない場合に電話対応を受け付けることや、動画に字幕がない場合に代替テキストを提供することなどが挙げられます。
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">アクセシビリティ方針を公開するメリット</h3>
+                            <p>
+                                すべてのWebサイトが今すぐに完璧なアクセシビリティ（JIS X 8341-3
+                                適合レベルAAなど）を達成することは、技術的・コスト的に難しい場合があります。しかし、重要なのは「現時点での対応状況」と「今後の取り組み」を誠実に明示することです。
+                            </p>
+                            <ul class="list-disc pl-5 mt-2 space-y-2">
+                                <li><strong>信頼性の向上:</strong> 誰にとっても使いやすいサイトを目指している姿勢を示すことで、ユーザーや社会からの信頼が高まります。</li>
+                                <li><strong>リスク管理:</strong> 現状の対応範囲を明確にすることで、トラブルを未然に防ぎ、具体的なフィードバックを受け入れやすくなります。</li>
+                                <li><strong>SEOへの効果:</strong>
+                                    アクセシビリティの高いサイトは、検索エンジンにとっても理解しやすい構造であることが多く、結果としてSEO評価にプラスに働きます。</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">このツールの活用方法</h3>
+                            <p>
+                                この「A11y
+                                Fixer」は、専門的な知識がなくても、簡単なチェックリストに答えるだけで標準的なアクセシビリティ方針ページを作成できるツールです。現状で対応できている項目にはチェックを入れ、できていない項目については今後の対応予定や代替手段を記載することで、実態に即した誠実な方針文を作成できます。あなたのWebサイトでも、ぜひアクセシビリティへの取り組みを公開してみてください。
+                            </p>
+                        </section>
+                    </div>
+                </article>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t border-gray-100 py-8 mt-12">
+            <div class="container mx-auto px-4 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2025 Creators Box</p>
+                <div class="mt-4 flex justify-center space-x-6 text-sm">
+                    <a href="../../index.html" class="text-primary hover:underline">ホーム</a>
+                    <a href="../../privacy-policy/index.html" class="text-primary hover:underline">プライバシーポリシー</a>
+                </div>
+                <p class="mt-4 text-xs text-gray-400">※本ツールで生成された方針文の法的な完全性を保証するものではありません。</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref, computed } = Vue;
+
+        createApp({
+            setup() {
+                // Basic Info
+                const siteName = ref('');
+                const url = ref('');
+                const targetLevel = ref('JIS X 8341-3:2016 レベルA');
+
+                // Unsupported Items Handling
+                const unsupportedType = ref('plan'); // 'plan' or 'exclude'
+                const targetDate = ref('');
+                const contactInfo = ref('');
+
+                // UI State
+                const outputFormat = ref('html'); // 'html' or 'markdown'
+                const copied = ref(false);
+
+                // Checklist Data
+                // Categories match JIS X 8341-3 principles: Perceivable, Operable, Understandable, Robust
+                const checklist = ref([
+                    {
+                        name: '1. 知覚可能 (情報の認知)',
+                        items: [
+                            { label: '画像に代替テキストがある', desc: 'imgタグにalt属性が設定され、画像の意味が説明されていますか？', checked: true },
+                            { label: '動画・音声に字幕/代替がある', desc: '動画に字幕がある、または音声の内容を書き起こしたテキストがありますか？', checked: false },
+                            { label: '色だけで情報を伝えていない', desc: '「赤色のボタンを押して」など、色を見分けられないと理解できない指示がありませんか？', checked: true },
+                            { label: '文字サイズが変更可能', desc: 'ブラウザの機能で文字を拡大しても、レイアウトが崩れずに読めますか？', checked: true },
+                        ]
+                    },
+                    {
+                        name: '2. 操作可能 (UIの操作)',
+                        items: [
+                            { label: 'キーボードだけで操作できる', desc: 'Tabキーでリンクやボタンに移動し、Enterキーで実行できますか？', checked: true },
+                            { label: 'フォーカス位置が見える', desc: 'キーボード操作時、今どこを選択しているか（フォーカス枠）が明確に見えますか？', checked: true },
+                            { label: '点滅・閃光がない（または抑制）', desc: 'てんかん発作を誘発するような、激しい点滅コンテンツがありませんか？', checked: true },
+                            { label: '適切なページタイトルがある', desc: 'titleタグに、ページの内容を表す具体的で重複のないタイトルが設定されていますか？', checked: true },
+                        ]
+                    },
+                    {
+                        name: '3. 理解可能 (コンテンツの理解)',
+                        items: [
+                            { label: 'ページの言語指定がある', desc: 'htmlタグにlang="ja"などが正しく設定されていますか？', checked: true },
+                            { label: '専門用語・略語の解説がある', desc: '理解しにくい用語に説明を加えるか、平易な表現を使っていますか？', checked: false },
+                            { label: 'エラーの特定と修正提案', desc: 'フォーム入力エラー時、どこが間違っているかを明示し、修正方法を提案していますか？', checked: true },
+                        ]
+                    },
+                    {
+                        name: '4. 堅牢性 (技術的な互換性)',
+                        items: [
+                            { label: 'HTMLの構文エラーがない', desc: 'タグの閉じ忘れや、IDの重複などの基本的な構文エラーがありませんか？', checked: true },
+                            { label: '支援技術(スクリーンリーダー等)対応', desc: 'WAI-ARIAなどを使用し、支援技術で適切に読み上げられますか？', checked: false },
+                        ]
+                    }
+                ]);
+
+                // Computed: Count checked items
+                const checkedCount = computed(() => {
+                    let count = 0;
+                    checklist.value.forEach(cat => {
+                        cat.items.forEach(item => {
+                            if (item.checked) count++;
+                        });
+                    });
+                    return count;
+                });
+
+                // Logic: Generate Content
+                const generatedContent = computed(() => {
+                    const sn = siteName.value || '[サイト名]';
+                    const u = url.value || '[URL]';
+                    const tl = targetLevel.value;
+                    const contact = contactInfo.value || '[連絡先]';
+                    const dateStr = new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                    // Collect checked items
+                    let passedList = [];
+                    let failedList = [];
+
+                    checklist.value.forEach(cat => {
+                        cat.items.forEach(item => {
+                            if (item.checked) passedList.push(item.label);
+                            else failedList.push(item.label);
+                        });
+                    });
+
+                    if (outputFormat.value === 'markdown') {
+                        // MARKDOWN GENERATION
+                        let md = `# ウェブアクセシビリティ方針\n\n`;
+                        md += `${sn}（以下「当サイト」）は、提供するサービスや情報をより多くの方にご利用いただけるよう、「JIS X 8341-3:2016 高齢者・障害者等配慮設計指針－情報通信における機器，ソフトウェア及びサービス－第3部：ウェブコンテンツ」に基づき、ウェブアクセシビリティの確保と向上に取り組んでいます。\n\n`;
+
+                        md += `## 1. 対象範囲\n`;
+                        md += `当サイト（${u}）全体。\n\n`;
+
+                        md += `## 2. 目標とする適合レベル\n`;
+                        md += `${tl} への準拠を目標とします。\n\n`;
+
+                        md += `## 3. 現在の対応状況\n`;
+                        md += `以下の項目について、対応を確認しています。\n\n`;
+                        if (passedList.length > 0) {
+                            passedList.forEach(item => md += `- ${item}\n`);
+                        } else {
+                            md += `- 確認中\n`;
+                        }
+                        md += `\n`;
+
+                        md += `## 4. 今後の対応方針\n`;
+                        if (failedList.length > 0) {
+                            md += `以下の項目については、${unsupportedType.value === 'plan' ? '現在対応を進めており、是正いたします。' : '現状の技術的・運用的制約により、適合の対象外とします。'}\n\n`;
+                            failedList.forEach(item => md += `- ${item}\n`);
+                            if (unsupportedType.value === 'plan' && targetDate.value) {
+                                md += `\n**対応予定時期**: ${targetDate.value}\n`;
+                            }
+                        } else {
+                            md += `現在把握している問題点はありませんが、引き続き品質維持に努めます。\n`;
+                        }
+                        md += `\n`;
+
+                        md += `## 5. お問い合わせ\n`;
+                        md += `当サイトのアクセシビリティに関するご意見・ご要望がございましたら、下記までご連絡ください。\n\n`;
+                        md += `${contact}\n\n`;
+
+                        md += `---\n*策定日: ${dateStr}*`;
+                        return md;
+
+                    } else {
+                        // HTML GENERATION
+                        let html = `<!DOCTYPE html>\n<html lang="ja">\n<head>\n<meta charset="UTF-8">\n<title>ウェブアクセシビリティ方針 | ${sn}</title>\n</head>\n<body>\n\n`;
+                        html += `<h1>ウェブアクセシビリティ方針</h1>\n`;
+                        html += `<p>${sn}（以下「当サイト」）は、提供するサービスや情報をより多くの方にご利用いただけるよう、「JIS X 8341-3:2016 高齢者・障害者等配慮設計指針－情報通信における機器，ソフトウェア及びサービス－第3部：ウェブコンテンツ」に基づき、ウェブアクセシビリティの確保と向上に取り組んでいます。</p>\n\n`;
+
+                        html += `<h2>1. 対象範囲</h2>\n`;
+                        html += `<p>当サイト（${u}）全体。</p>\n\n`;
+
+                        html += `<h2>2. 目標とする適合レベル</h2>\n`;
+                        html += `<p>${tl} への準拠を目標とします。</p>\n\n`;
+
+                        html += `<h2>3. 現在の対応状況</h2>\n`;
+                        html += `<p>以下の項目について、対応を確認しています。</p>\n`;
+                        html += `<ul>\n`;
+                        if (passedList.length > 0) {
+                            passedList.forEach(item => html += `  <li>${item}</li>\n`);
+                        } else {
+                            html += `  <li>確認中</li>\n`;
+                        }
+                        html += `</ul>\n\n`;
+
+                        html += `<h2>4. 今後の対応方針</h2>\n`;
+                        if (failedList.length > 0) {
+                            html += `<p>以下の項目については、${unsupportedType.value === 'plan' ? '現在対応を進めており、是正いたします。' : '現状の技術的・運用的制約により、適合の対象外とします。'}</p>\n`;
+                            html += `<ul>\n`;
+                            failedList.forEach(item => html += `  <li>${item}</li>\n`);
+                            html += `</ul>\n`;
+                            if (unsupportedType.value === 'plan' && targetDate.value) {
+                                html += `<p><strong>対応予定時期</strong>: ${targetDate.value}</p>\n`;
+                            }
+                        } else {
+                            html += `<p>現在把握している問題点はありませんが、引き続き品質維持に努めます。</p>\n`;
+                        }
+                        html += `\n`;
+
+                        html += `<h2>5. お問い合わせ</h2>\n`;
+                        html += `<p>当サイトのアクセシビリティに関するご意見・ご要望がございましたら、下記までご連絡ください。</p>\n`;
+                        html += `<p>${contact}</p>\n\n`;
+
+                        html += `<hr>\n<p><small>策定日: ${dateStr}</small></p>\n\n`;
+                        html += `</body>\n</html>`;
+                        return html;
+                    }
+                });
+
+                // Methods
+                const copyToClipboard = async () => {
+                    try {
+                        await navigator.clipboard.writeText(generatedContent.value);
+                        copied.value = true;
+                        // Toast reset
+                        setTimeout(() => {
+                            copied.value = false;
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy', err);
+                    }
+                };
+
+                return {
+                    siteName,
+                    url,
+                    targetLevel,
+                    checklist,
+                    checkedCount,
+                    unsupportedType,
+                    targetDate,
+                    contactInfo,
+                    outputFormat,
+                    generatedContent,
+                    copied,
+                    copyToClipboard
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
