@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430823905768506"
@@ -23,6 +23,39 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css?v=2.1">
 
+    <!-- Tailwind CSS (Added for New Hero Section) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        blob: "blob 7s infinite",
+                    },
+                    keyframes: {
+                        blob: {
+                            "0%": {
+                                transform: "translate(0px, 0px) scale(1)",
+                            },
+                            "33%": {
+                                transform: "translate(30px, -50px) scale(1.1)",
+                            },
+                            "66%": {
+                                transform: "translate(-20px, 20px) scale(0.9)",
+                            },
+                            "100%": {
+                                transform: "translate(0px, 0px) scale(1)",
+                            },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,40 +63,70 @@
 </head>
 
 <body>
-    <!-- Hero Section -->
-    <header class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <svg class="badge-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 15.5L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z"
-                            fill="currentColor" />
-                    </svg>
-                    <span>無料 · 登録不要 · ブラウザ完結</span>
-                </div>
+    <!-- Navigation -->
+    <nav class="w-full py-6 px-6 md:px-12 flex items-center justify-between bg-slate-50 relative z-20">
+        <div class="logo font-bold text-xl text-slate-800 tracking-tight">Creators Box</div>
+    </nav>
 
-                <h1 class="hero-title">Creators Box</h1>
+    <!-- Manifesto Hero Section -->
+    <header class="relative bg-slate-50 overflow-hidden pt-12 pb-32 md:pt-20 md:pb-40">
+        <!-- Background Decorations -->
+        <div
+            class="absolute top-0 left-0 w-96 h-96 bg-blue-100/50 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob">
+        </div>
+        <div
+            class="absolute top-0 right-0 w-96 h-96 bg-slate-200/50 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000">
+        </div>
+        <div
+            class="absolute -bottom-32 left-20 w-96 h-96 bg-blue-50/50 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000">
+        </div>
 
-                <p class="hero-subtitle">
-                    Web制作の「めんどくさい」を秒で解決する<br class="mobile-break">ブラウザ完結型ツールボックス
+        <div class="container mx-auto px-6 relative z-10 text-center">
+
+            <!-- Catch Copy -->
+            <div class="mb-12">
+                <p class="text-blue-600 font-medium tracking-wide mb-4 text-sm md:text-base">
+                    Is Convenience worth your Freedom?
                 </p>
-
-                <p class="hero-description">
-                    登録不要・インストール不要。すべての処理はあなたのブラウザ内で完結します。<br>
-                    安全・高速・シンプルな開発者向けツール集。
-                </p>
-
-                <div class="hero-cta">
-                    <a href="#tools" class="btn-primary">
-                        ツールを見る
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </div>
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-tight">
+                    「便利さ」の代償に、<br class="md:hidden">自由を奪われていませんか？
+                </h1>
             </div>
+
+            <!-- Body Copy -->
+            <p class="text-slate-600 leading-relaxed text-lg md:text-xl max-w-2xl mx-auto mb-16">
+                巨大IT企業に吸われ続ける個人データ。<br>
+                毎月の固定費（サブスク）に首を絞められ、<br>
+                本来の「創作」に使うべき時間が、「管理」や「事務作業」に浸食されていく——。<br>
+                そんな<span class="border-b-2 border-blue-200">「得体の知れない閉塞感」</span>に、さようなら。
+            </p>
+
+            <!-- Solution Box -->
+            <div
+                class="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm border border-blue-100 rounded-2xl p-8 md:p-12 shadow-sm mb-16">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-800 mb-6">
+                    システムからの「切断」を、今ここに。
+                </h2>
+                <p class="text-slate-700 leading-relaxed mb-6">
+                    Creators Boxは、外部APIやサーバーに一切依存せず、あなたのブラウザ内だけで処理が完結する、ミニマルで「静謐」なWebツール群。
+                </p>
+                <p class="text-slate-900 font-medium">
+                    面倒な単純作業を秒で終わらせ、コーヒー1杯分の「余白」と「創作の自由」を取り戻す。
+                </p>
+            </div>
+
+            <!-- CTA Button -->
+            <div>
+                <a href="#tools"
+                    class="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    ツールを使ってみる
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+            </div>
+
         </div>
     </header>
 
