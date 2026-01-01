@@ -526,7 +526,7 @@ button:focus-visible {
     border-radius: 50%;
     object-fit: cover;
     box-shadow: var(--shadow-md);
-    margin-bottom: var(--spacing-md);
+    margin: 0 auto var(--spacing-md);
     border: 3px solid white;
 }
 
