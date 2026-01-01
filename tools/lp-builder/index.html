@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LP Logic Builder - 売れるLP構成案を自動生成 | Creators Box</title>
+    <meta name="description" content="ターゲットや悩みを入力するだけで、マーケティング心理学に基づいた「売れるLP構成案」とキャッチコピーを自動生成する無料ツール。ライター、開発者、デザイナー向け。">
+    <meta property="og:title" content="LP Logic Builder - LP構成案ジェネレーター">
+    <meta property="og:description" content="「売れる」構成案を3分で作成。マーケティング思考をインストールする無料ツール。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://creators-box.pages.dev/tools/lp-builder/">
+    <meta property="og:image" content="https://creators-box.pages.dev/assets/ogp-generic.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Vue.js 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .tooltip-icon {
+            cursor: help;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+            <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+                <a href="../../index.html"
+                    class="flex items-center gap-2 text-slate-700 hover:text-brand-600 transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12.7071 5.29289C13.0976 5.68342 13.0976 6.31658 12.7071 6.70711L9.41421 10L12.7071 13.2929C13.0976 13.6834 13.0976 14.3166 12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L7.29289 10.7071C6.90237 10.3166 6.90237 9.68342 7.29289 9.29289L11.2929 5.29289C11.6834 4.90237 12.3166 4.90237 12.7071 5.29289Z"
+                            fill="currentColor" />
+                    </svg>
+                    <span class="font-bold tracking-tight">Creators Box</span>
+                </a>
+                <h1 class="text-lg font-bold text-slate-800 hidden sm:block">LP Logic Builder</h1>
+                <div class="flex items-center gap-3">
+                    <button @click="loadData" v-if="hasSavedData"
+                        class="text-sm text-slate-600 hover:text-brand-600 underline">
+                        保存データを復元
+                    </button>
+                    <button @click="saveData"
+                        class="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 px-4 rounded-lg transition-colors font-medium flex items-center gap-2">
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        保存
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <div class="grid lg:grid-cols-2 gap-8 h-full">
+
+                <!-- Left Column: Input Form -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <span
+                                class="bg-brand-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+                            ファンダメンタルズ問診票
+                        </h2>
+                        <p class="text-sm text-slate-500 mb-6">以下の項目を埋めるだけで、論理的な構成案が出来上がります。</p>
+
+                        <form class="space-y-5" @submit.prevent>
+                            <div v-for="(field, key) in fields" :key="key" class="space-y-1">
+                                <label class="block text-sm font-semibold text-slate-700 flex items-center gap-1">
+                                    {{ field.label }}
+                                    <span class="text-xs font-normal text-slate-400 tooltip-icon"
+                                        :title="field.hint">?</span>
+                                </label>
+                                <textarea v-if="field.type === 'textarea'" v-model="input[key]"
+                                    :placeholder="field.placeholder"
+                                    class="w-full rounded-lg border-slate-300 shadow-sm focus:border-brand-600 focus:ring focus:ring-brand-600/20 text-slate-800 text-sm h-24 py-2 px-3 resize-none"></textarea>
+                                <input v-else type="text" v-model="input[key]" :placeholder="field.placeholder"
+                                    class="w-full rounded-lg border-slate-300 shadow-sm focus:border-brand-600 focus:ring focus:ring-brand-600/20 text-slate-800 text-sm py-2 px-3">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Column: Output -->
+                <div class="space-y-6 lg:sticky lg:top-24 h-fit">
+                    <div
+                        class="bg-white rounded-xl border border-slate-200 shadow-md overflow-hidden flex flex-col max-h-[calc(100vh-8rem)]">
+
+                        <!-- Tabs -->
+                        <div class="flex border-b border-slate-200 bg-slate-50">
+                            <button v-for="tab in ['preview', 'code']" :key="tab" @click="activeTab = tab"
+                                class="flex-1 py-3 text-sm font-medium transition-colors border-b-2"
+                                :class="activeTab === tab ? 'border-brand-600 text-brand-600 bg-white' : 'border-transparent text-slate-500 hover:text-slate-700'">
+                                {{ tab === 'preview' ? 'プレビュー' : 'HTMLコード' }}
+                            </button>
+                        </div>
+
+                        <!-- Content Area -->
+                        <div class="flex-grow overflow-y-auto p-6 bg-slate-50">
+
+                            <!-- Preview Tab -->
+                            <div v-if="activeTab === 'preview'" class="space-y-8 animate-fade-in">
+
+                                <!-- AB Test Headlines -->
+                                <div class="space-y-3">
+                                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">ヘッドライン案
+                                        (ABテスト用)</h3>
+                                    <div v-for="(headline, i) in generatedHeadlines" :key="i"
+                                        class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:border-brand-600 transition-colors">
+                                        <div class="flex justify-between items-start gap-3">
+                                            <p class="font-bold text-slate-800 text-lg leading-snug">{{ headline.text }}
+                                            </p>
+                                            <span
+                                                class="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded whitespace-nowrap">{{
+                                                headline.type }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="h-px bg-slate-200 w-full"></div>
+
+                                <!-- Wireframe Preview -->
+                                <div class="bg-white border border-slate-300 shadow-sm mx-auto max-w-sm sm:max-w-full">
+                                    <!-- Hero -->
+                                    <div class="bg-slate-900 text-white p-8 text-center space-y-4">
+                                        <div
+                                            class="inline-block bg-yellow-500 text-black text-xs font-bold px-2 py-0.5 rounded-full mb-2">
+                                            {{ input.authority || '権威性・No.1など' }}
+                                        </div>
+                                        <h2 class="text-2xl font-bold leading-tight">{{ generatedHeadlines[0].text }}
+                                        </h2>
+                                        <button
+                                            class="bg-green-500 text-white font-bold py-3 px-6 rounded shadow-lg w-full max-w-xs mx-auto block">
+                                            今すぐ{{ input.benefit || '未来を手に入れる' }}
+                                        </button>
+                                    </div>
+                                    <!-- Pain -->
+                                    <div class="p-6 bg-slate-50 border-b border-slate-200">
+                                        <h3 class="text-center font-bold text-slate-800 mb-4">こんなお悩みありませんか？</h3>
+                                        <ul class="space-y-2 text-sm text-slate-700 list-disc pl-5">
+                                            <li>{{ input.pain || 'ここにユーザーの悩みが入ります' }}</li>
+                                            <li>解決策がわからず困っている</li>
+                                            <li>既存の方法では効果が出ない</li>
+                                        </ul>
+                                    </div>
+                                    <!-- Solution -->
+                                    <div class="p-6 bg-white border-b border-slate-200">
+                                        <h3 class="text-center font-bold text-brand-600 mb-2">解決策</h3>
+                                        <p class="text-center font-bold text-xl mb-4 text-slate-900">{{ input.product ||
+                                            'プロダクト名' }}</p>
+                                        <p class="text-sm text-slate-600 leading-relaxed">
+                                            {{ input.bridge || '独自のメソッド' }}により、あなたの悩みを根本から解決します。
+                                            {{ input.product }}を選ぶ3つの理由...
+                                        </p>
+                                    </div>
+                                    <!-- CTA -->
+                                    <div class="p-6 bg-slate-100 text-center">
+                                        <p class="font-bold text-red-600 text-lg mb-2">{{ input.offer || '期間限定オファー' }}
+                                        </p>
+                                        <button
+                                            class="bg-green-500 text-white font-bold py-3 px-6 rounded shadow-lg w-full">
+                                            無料で試してみる
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Code Tab -->
+                            <div v-else class="h-full flex flex-col">
+                                <textarea readonly
+                                    class="flex-grow w-full font-mono text-xs text-slate-600 bg-slate-100 p-4 rounded border border-slate-200 resize-none focus:outline-none"
+                                    rows="20">{{ generatedHtml }}</textarea>
+                                <button @click="copyCode"
+                                    class="mt-4 w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                                    コードをコピー
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- SEO Content -->
+        <section class="bg-slate-50 border-t border-slate-200 py-12 mt-8">
+            <div class="container mx-auto px-4 max-w-3xl">
+                <article class="prose prose-slate mx-auto">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6">なぜ『綺麗なデザイン』だけでは売れないのか？</h2>
+                    <p class="text-slate-600 mb-4">
+                        多くの開発者やデザイナーが陥りがちな罠があります。それは「デザインさえ良ければ売れる」という誤解です。
+                        もちろん、デザインは信頼性を担保するために重要です。しかし、商品購入やサービス登録といった「行動」をユーザーに促すのは、いつの時代も「言葉」です。
+                    </p>
+                    <h3 class="text-lg font-bold text-slate-800 mt-6 mb-3">ファンダメンタルズマーケティングの重要性</h3>
+                    <p class="text-slate-600 mb-4">
+                        北の達人コーポレーションの木下社長が提唱する「ファンダメンタルズマーケティング」では、テクニックよりも「誰に(Target)」「何を(Product)」「どう伝えるか(Message)」の基礎設計を重視します。
+                        LPの反応率を決めるのは、ボタンの色などの細かいテクニックではなく、「その商品が私の今の悩みを解決してくれるか？」という根本的な問いへの答えです。
+                    </p>
+                    <h3 class="text-lg font-bold text-slate-800 mt-6 mb-3">このツールの活用法</h3>
+                    <p class="text-slate-600 mb-4">
+                        このLP Logic Builderは、その「基礎設計」を強制的に行うためのツールです。
+                        ターゲットの深い悩み(Pain)と、それが解決された理想の未来(Benefit)を言語化することで、小手先のテクニックに頼らない「骨太なLP」の骨子が完成します。
+                        デザインに着手する前に、まずはこのツールで「売れる論理」を組み立ててみてください。
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
+            <div class="container mx-auto px-4 text-center">
+                <p class="text-slate-500 text-sm">&copy; 2026 Creators Box. All rights reserved.</p>
+                <a href="../../index.html"
+                    class="inline-block mt-2 text-brand-600 hover:text-brand-700 text-sm font-medium">トップページに戻る</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref, computed, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const activeTab = ref('preview');
+                const hasSavedData = ref(false);
+
+                // Form Data
+                const input = ref({
+                    target: '',
+                    pain: '',
+                    product: '',
+                    bridge: '',
+                    benefit: '',
+                    authority: '',
+                    offer: ''
+                });
+
+                // Field Definitions
+                const fields = {
+                    target: { label: 'ターゲット (Target)', hint: '具体的に誰の悩みですか？', placeholder: '例：30代の個人開発者、副業Webライター' },
+                    pain: { label: '悩み (Pain)', hint: '夜も眠れないほどの深い悩みは？機能ではなく感情で。', placeholder: '例：法対応が面倒で開発が止まる、案件が取れなくて不安', type: 'textarea' },
+                    product: { label: 'プロダクト名 (Product)', hint: 'サービスやツールの名称', placeholder: '例：invoice gen, AIライティングツール' },
+                    bridge: { label: '解決策 (Bridge)', hint: 'なぜその悩みご解決するのか？（独自の強み）', placeholder: '例：APIを使わないローカル処理技術、プロの思考法を再現したAI' },
+                    benefit: { label: 'ベネフィット (Benefit)', hint: '使用後に得られる理想の未来', placeholder: '例：面倒な事務作業から解放され、創作に没頭できる' },
+                    authority: { label: '権威性 (Authority)', hint: 'なぜ信用できるのか？客観的な証拠。', placeholder: '例：JIS規格準拠、導入社数1000社突破' },
+                    offer: { label: 'オファー (Offer)', hint: '今すぐ行動すべき理由', placeholder: '例：完全無料、登録不要、本日まで50%OFF' }
+                };
+
+                // Logic: Generate Headlines
+                const generatedHeadlines = computed(() => {
+                    const p = input.value;
+                    const fallback = (val, alt) => val ? val : alt;
+
+                    return [
+                        {
+                            type: 'パターンA: 悩み解決型',
+                            text: `「${fallback(p.pain, '〇〇な悩み')}」にさようなら。${fallback(p.bridge, 'この方法')}で、${fallback(p.benefit, '理想の未来')}を手に入れませんか？`
+                        },
+                        {
+                            type: 'パターンB: ターゲット呼びかけ型',
+                            text: `「${fallback(p.pain, '〇〇でお困りの方')}」へ。${fallback(p.target, 'あなた')}のための解決策がここにあります。`
+                        },
+                        {
+                            type: 'パターンC: 意外性・権威性型',
+                            text: `なぜ、${fallback(p.target, 'プロ')}は${fallback(p.product, 'このツール')}を選ぶのか？その理由は${fallback(p.authority, '実績')}にありました。`
+                        }
+                    ];
+                });
+
+                // Logic: Generate HTML Code
+                const generatedHtml = computed(() => {
+                    return `<!-- LP Structure Generated by Creators Box -->
+<section id="hero">
+  <h1>${generatedHeadlines.value[0].text}</h1>
+  <p>${input.value.authority || '権威性テキスト'}</p>
+  <button>今すぐ${input.value.benefit || '始める'}</button>
+</section>
+
+<section id="pain">
+  <h2>こんなお悩みありませんか？</h2>
+  <ul>
+    <li>${input.value.pain || '悩みテキスト...'}</li>
+  </ul>
+</section>
+
+<section id="solution">
+  <h2>解決策：${input.value.product || 'プロダクト名'}</h2>
+  <p>${input.value.bridge || '独自の強み...'}により解決します。</p>
+</section>
+
+<section id="evidence">
+  <h2>選ばれる理由</h2>
+  <p>${input.value.authority || '実績や証拠...'}</p>
+</section>
+
+<section id="closing">
+  <h2>今すぐ${input.value.benefit || '理想の未来'}へ</h2>
+  <p>${input.value.offer || '強力なオファー'}</p>
+  <button>申し込む</button>
+</section>`;
+                });
+
+                // Persistence
+                const saveData = () => {
+                    localStorage.setItem('lp_builder_data', JSON.stringify(input.value));
+                    hasSavedData.value = true;
+                    alert('ブラウザに一時保存しました。');
+                };
+
+                const loadData = () => {
+                    const saved = localStorage.getItem('lp_builder_data');
+                    if (saved) {
+                        if (confirm('入力内容を保存データで上書きしますか？')) {
+                            input.value = JSON.parse(saved);
+                        }
+                    }
+                };
+
+                const copyCode = () => {
+                    navigator.clipboard.writeText(generatedHtml.value).then(() => {
+                        alert('HTMLコードをコピーしました');
+                    });
+                };
+
+                onMounted(() => {
+                    if (localStorage.getItem('lp_builder_data')) {
+                        hasSavedData.value = true;
+                    }
+                });
+
+                return {
+                    activeTab,
+                    input,
+                    fields,
+                    generatedHeadlines,
+                    generatedHtml,
+                    saveData,
+                    loadData,
+                    hasSavedData,
+                    copyCode
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
