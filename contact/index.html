@@ -3,6 +3,22 @@
 <!-- Build trigger: 2025-12-25 Retrying deployment -->
 
 <head>
+    <script>
+        // 現在のURLが本番ドメイン(creators-box.net)の場合のみGA4を読み込む
+        if (window.location.hostname === "creators-box.net") {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = "https://www.googletagmanager.com/gtag/js?id=G-WXMCP3D8W6";
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-WXMCP3D8W6');
+        } else {
+            console.log("GA4: ローカル/プレビュー環境のため計測をスキップしました");
+        }
+    </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430823905768506"
         crossorigin="anonymous"></script>
     <meta charset="UTF-8">
