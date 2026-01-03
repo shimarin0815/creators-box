@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <script>
+        // 現在のURLが本番ドメイン(creators-box.net)の場合のみGA4を読み込む
+        if (window.location.hostname === "creators-box.net") {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = "https://www.googletagmanager.com/gtag/js?id=G-WXMCP3D8W6";
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-WXMCP3D8W6');
+        } else {
+            console.log("GA4: ローカル/プレビュー環境のため計測をスキップしました");
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature to Benefit Converter - 機能→ベネフィット変換機 | Creators Box</title>
+    <meta name="description" content="入力された「機能（スペック）」を、マーケティング心理学に基づいた「ユーザーのメリット（ベネフィット）」に自動変換。LP作成やセールスライティングを支援します。">
+    <meta property="og:title" content="Feature to Benefit Converter - 機能→ベネフィット変換機">
+    <meta property="og:description" content="スペックを並べるだけのLPは卒業。マーケティング思考で「売れる言葉」へ自動変換。">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="../../index.html"
+                class="flex items-center gap-2 text-slate-700 hover:text-brand-600 transition-colors">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12.7071 5.29289C13.0976 5.68342 13.0976 6.31658 12.7071 6.70711L9.41421 10L12.7071 13.2929C13.0976 13.6834 13.0976 14.3166 12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L7.29289 10.7071C6.90237 10.3166 6.90237 9.68342 7.29289 9.29289L11.2929 5.29289C11.6834 4.90237 12.3166 4.90237 12.7071 5.29289Z"
+                        fill="currentColor" />
+                </svg>
+                <span class="font-bold tracking-tight">Creators Box</span>
+            </a>
+            <h1 class="text-sm md:text-lg font-bold text-slate-800">Feature to Benefit Converter</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-start">
+
+            <!-- Input Area -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6 lg:sticky lg:top-24">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800 mb-2">機能（Feature）を入力</h2>
+                    <p class="text-sm text-slate-500">商品のスペックや特徴を入力してください。「〜機能」「〇〇GB」「業界初〜」など。</p>
+                </div>
+
+                <div class="space-y-4">
+                    <textarea id="input-feature"
+                        class="w-full h-32 p-4 rounded-lg border border-slate-300 focus:border-brand-600 focus:ring focus:ring-brand-600/20 resize-none text-slate-800 placeholder:text-slate-400"
+                        placeholder="例：50GBの容量"></textarea>
+
+                    <button id="btn-convert"
+                        class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-lg shadow-sm transition-transform active:scale-[0.98] flex items-center justify-center gap-2">
+                        <span>変換する</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-lg text-xs text-slate-500 leading-relaxed">
+                    <p class="font-bold mb-1">💡 ヒント</p>
+                    売れるコピーライティングの基本は「Features（機能）」を「Benefits（利点）」に変換することです。顧客は「ドリル」ではなく「穴」を求めています。
+                </div>
+            </div>
+
+            <!-- Output Area -->
+            <div id="output-area" class="space-y-4">
+                <div class="text-center py-12 text-slate-400 bg-slate-50/50 rounded-xl border border-dashed border-slate-200"
+                    id="placeholder-msg">
+                    左側に機能を入力して<br>変換ボタンを押してください
+                </div>
+                <!-- Cards will be injected here -->
+            </div>
+
+        </div>
+
+        <!-- SEO Content Section -->
+        <section class="mt-20 border-t border-slate-200 pt-12">
+            <div class="max-w-3xl mx-auto prose prose-slate">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-6">なぜ「機能」を語っても商品は売れないのか？</h2>
+                <div class="space-y-6 text-slate-600 leading-relaxed">
+                    <p>
+                        「この商品は業界最軽量の150gです」「最新のAIチップを搭載しました」「50GBの大容量ストレージがあります」……。<br>
+                        多くの開発者やマーケターが、ついやってしまいがちなのが、こうした<strong>「機能（Feature）」の羅列</strong>です。しかし、残念ながらそれだけでは商品は売れません。なぜなら、顧客は「その商品そのもの」が欲しいわけではないからです。
+                    </p>
+
+                    <h3 class="text-xl font-bold text-slate-800 mt-8 mb-3">ドリルを買う人は「穴」が欲しい</h3>
+                    <p>
+                        有名なマーケティングの格言に「ドリルを買う人が欲しいのはドリルではなく、穴である」という言葉があります。
+                        顧客が本当にお金を払って手に入れたいのは、その商品を使った先にある<strong>「未来の自分（Benefit）」</strong>や<strong>「悩みの解決」</strong>です。
+                        Feature to Benefit Converterは、入力された無機質なスペック情報を、顧客の感情に響く「ベネフィット」へと自動変換するツールです。
+                    </p>
+
+                    <h3 class="text-xl font-bold text-slate-800 mt-8 mb-3">プロが使う4つの心理トリガー</h3>
+                    <p>
+                        このツールでは、プロのコピーライターが頻繁に使用する4つの心理フレームワークを用いて変換を行っています。
+                    </p>
+                    <ul class="list-disc pl-6 space-y-2 mt-4">
+                        <li><strong>損失回避（Loss Aversion）:</strong>
+                            「得すること」よりも「損すること」を避けたいという人間の本能を刺激します。「もう悩まなくていい」という安堵感を提供します。</li>
+                        <li><strong>未来の快楽（Future Pace）:</strong> その機能があることで、生活がどう変わるのか？具体的にイメージさせることで購買意欲を高めます。</li>
+                        <li><strong>優越感・ステータス（Ego）:</strong> 「他とは違う」「選ばれた存在」であることを強調し、承認欲求を満たします。</li>
+                        <li><strong>結論（So What?）:</strong> 結局どういうことなのか？を一言で言い表し、脳への負担を減らして理解を促します。</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold text-slate-800 mt-8 mb-3">ツールの活用方法</h3>
+                    <p>
+                        LP（ランディングページ）のヘッドライン、広告のキャッチコピー、SNSの投稿文、商品紹介文など、あらゆる場面で活用できます。
+                        出てきたコピーをそのまま使うだけでなく、そこから発想を広げて、より自社の商品にマッチした言葉に調整してみてください。
+                        「機能」を「ベネフィット」に変える思考の癖をつけるだけで、あなたの書く文章の反応率は劇的に変わるはずです。
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm">&copy; 2026 Creators Box</p>
+            <div class="mt-4 flex justify-center space-x-6 text-sm">
+                <a href="../../index.html" class="text-brand-600 hover:underline">ホーム</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputEl = document.getElementById('input-feature');
+            const btnConvert = document.getElementById('btn-convert');
+            const outputArea = document.getElementById('output-area');
+            const placeholderMsg = document.getElementById('placeholder-msg');
+
+            // Patterns Definition
+            const patterns = [
+                {
+                    id: 'loss',
+                    title: '損失回避 (Loss Aversion)',
+                    desc: '「失うことの恐怖」を刺激し、行動を促す心理トリガー。',
+                    template: (f) => `もう、${f}がないことで悩む必要はありません。`
+                },
+                {
+                    id: 'future',
+                    title: '未来の快楽 (Future Pace)',
+                    desc: '商品を使用した後の「理想の未来」を想像させる。',
+                    template: (f) => `${f}のおかげで、あなたは本来やるべきことに集中できます。`
+                },
+                {
+                    id: 'ego',
+                    title: '優越感・ステータス (Ego)',
+                    desc: '自尊心を満たし、「選ばれた存在」であることを強調。',
+                    template: (f) => `周りが制限に苦しむ中、あなたは${f}を手に入れます。`
+                },
+                {
+                    id: 'sowhat',
+                    title: 'つまり？変換 (So What?)',
+                    desc: '機能がもたらす究極の結果を端的に表現。',
+                    template: (f) => `つまり、${f}ということは、ストレスゼロの生活が手に入るということです。`
+                }
+            ];
+
+            // Keywords Logic
+            const keywords = [
+                { keys: ['速', 'スピード', '秒', '高速'], text: 'もう、待ち時間のイライラに人生を浪費する必要はありません。' },
+                { keys: ['安', '価格', '円', 'コスト'], text: '浮いたコストで、本当に欲しかったあの機材を手に入れませんか？' },
+                { keys: ['軽', '重量', 'g', 'kg'], text: 'まるで持っていることを忘れるほどの軽さが、あなたの移動を劇的に自由へ変えます。' },
+                { keys: ['安全', 'セキュリティ', '守', 'プライバシー'], text: '鉄壁の守りが、あなたに「枕を高くして眠れる夜」を提供します。' }
+            ];
+
+            function generateCards(featureText) {
+                if (!featureText.trim()) return;
+
+                // Clear previous results
+                outputArea.innerHTML = '';
+                placeholderMsg.style.display = 'none';
+
+                // 1. Check keywords for a "Special Suggestion"
+                let specialSuggestion = null;
+                for (const k of keywords) {
+                    if (k.keys.some(key => featureText.includes(key))) {
+                        specialSuggestion = k.text;
+                        break; // Take the first match
+                    }
+                }
+
+                if (specialSuggestion) {
+                    const card = createCard('✨ おすすめの切り口', 'キーワードから自動抽出された具体的なベネフィット。', specialSuggestion, 'bg-yellow-50 border-yellow-200');
+                    outputArea.appendChild(card);
+                }
+
+                // 2. Generate standard patterns
+                patterns.forEach(p => {
+                    const text = p.template(featureText);
+                    const card = createCard(p.title, p.desc, text);
+                    outputArea.appendChild(card);
+                });
+            }
+
+            function createCard(title, desc, text, extraClasses = 'bg-white border-slate-200') {
+                const div = document.createElement('div');
+                div.className = `p-6 rounded-xl border shadow-sm animate-fade-in ${extraClasses}`;
+
+                div.innerHTML = `
+                    <div class="mb-3">
+                        <h3 class="font-bold text-slate-800 text-sm md:text-base flex items-center gap-2">
+                            ${title}
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-1">${desc}</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg relative group border border-slate-100">
+                        <p class="text-slate-700 font-medium text-lg leading-relaxed pr-8 output-text">${text}</p>
+                        <button class="btn-copy absolute top-2 right-2 p-2 text-slate-400 hover:text-brand-600 hover:bg-white rounded transition-colors" title="コピーする">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <span class="msg-copied absolute top-2 right-10 text-xs bg-slate-800 text-white px-2 py-1 rounded opacity-0 transition-opacity pointer-events-none">Copied!</span>
+                    </div>
+                `;
+
+                // Add Copy Logic
+                const btnCopy = div.querySelector('.btn-copy');
+                const msgCopied = div.querySelector('.msg-copied');
+
+                btnCopy.addEventListener('click', () => {
+                    navigator.clipboard.writeText(text).then(() => {
+                        msgCopied.style.opacity = '1';
+                        setTimeout(() => {
+                            msgCopied.style.opacity = '0';
+                        }, 2000);
+                    });
+                });
+
+                return div;
+            }
+
+            // Event Listeners
+            btnConvert.addEventListener('click', () => {
+                generateCards(inputEl.value);
+            });
+
+            // Enter key support (Ctrl+Enter)
+            inputEl.addEventListener('keydown', (e) => {
+                if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                    generateCards(inputEl.value);
+                }
+            });
+
+            // Restore from local storage? (Optional, kept simple for now as requested)
+        });
+    </script>
+</body>
+
+</html>
