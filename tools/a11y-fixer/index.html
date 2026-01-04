@@ -602,6 +602,13 @@
                 // Methods
                 const copyToClipboard = async () => {
                     try {
+                        // GA4 Tracking
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'use_tool', {
+                                'tool_name': document.title.replace(' | Creators Box', '')
+                            });
+                        }
+
                         await navigator.clipboard.writeText(generatedContent.value);
                         copied.value = true;
                         // Toast reset
@@ -614,6 +621,13 @@
                 };
 
                 const downloadHtml = () => {
+                    // GA4 Tracking
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'use_tool', {
+                            'tool_name': document.title.replace(' | Creators Box', '')
+                        });
+                    }
+
                     const content = generatedContent.value;
                     const blob = new Blob([content], { type: 'text/html' });
                     const link = document.createElement('a');

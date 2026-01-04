@@ -355,8 +355,21 @@
         // Formats
         const formatCurrency = (num) => new Intl.NumberFormat('ja-JP').format(Math.round(num));
 
+        // Flag for GA4
+        let hasTrackedUse = false;
+
         // Calculation Logic
         function calculate() {
+            // GA4 Tracking (First Interaction)
+            if (!hasTrackedUse && typeof gtag === 'function') {
+                // Ensure it's a real user interaction (inputs are not empty or changed)
+                // However, calculate is called on load. We should skip the initial load call?
+                // Actually, the initial call happens at the bottom: calculate();
+                // We only want to track when USER changes something.
+                // We can check if event is defined? No, calculate() doesn't take args here.
+                // Better approach: Add listener to inputs that fires ONCE.
+            }
+
             const ltv = parseFloat(inputs.ltv.value) || 0;
             const variableRate = parseFloat(inputs.variableRate.value) || 0;
             const currentCpo = parseFloat(inputs.currentCpo.value) || 0;
@@ -522,6 +535,16 @@
         // Event Listeners
         Object.values(inputs).forEach(input => {
             input.addEventListener('input', calculate);
+
+            // GA4 Tracking (First Interaction)
+            input.addEventListener('input', function () {
+                if (typeof gtag === 'function' && !window.hasTrackedUse) {
+                    gtag('event', 'use_tool', {
+                        'tool_name': 'The Death-Line Calculator'
+                    });
+                    window.hasTrackedUse = true;
+                }
+            }, { once: true });
         });
 
         // Initial Calculation

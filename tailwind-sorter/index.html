@@ -181,6 +181,16 @@
 
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <script>
+        // GA4 Event Tracking
+        document.getElementById('sortButton').addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'use_tool', {
+                    'tool_name': document.title.replace(' | Creators Box', '')
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -311,6 +311,22 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // GA4 Tracking (First Interaction)
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function () {
+                if (typeof gtag === 'function' && !this.hasTracked) {
+                    // Check global flag to avoid firing per input
+                    if (!window.hasTrackedUse) {
+                        gtag('event', 'use_tool', {
+                            'tool_name': 'Web Unit Converter'
+                        });
+                        window.hasTrackedUse = true;
+                    }
+                }
+            }, { once: true }); // optimize cleanup
+        });
+    </script>
 </body>
 
 </html>

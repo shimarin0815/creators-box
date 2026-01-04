@@ -94,11 +94,8 @@
                 box-shadow: none !important;
             }
         }
-
-        .input-field {
-            @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2;
-        }
     </style>
+
 </head>
 
 <body class="bg-gray-50 text-gray-800">
@@ -140,25 +137,31 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">発注日</label>
-                                <input type="date" v-model="form.orderDate" class="input-field">
+                                <input type="date" v-model="form.orderDate"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">発注No.</label>
-                                <input type="text" v-model="form.orderNumber" class="input-field"
+                                <input type="text" v-model="form.orderNumber"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
                                     placeholder="例: 20250101-01">
                             </div>
 
                             <div class="pt-2">
                                 <label class="block text-sm font-medium text-gray-700">甲（発注者・支払う側）</label>
-                                <input type="text" v-model="form.clientName" class="input-field" placeholder="会社名・氏名">
-                                <input type="text" v-model="form.clientAddress" class="input-field mt-2 text-xs"
+                                <input type="text" v-model="form.clientName"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
+                                    placeholder="会社名・氏名">
+                                <input type="text" v-model="form.clientAddress"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 mt-2 text-xs"
                                     placeholder="住所・連絡先">
                             </div>
 
                             <div class="pt-2">
                                 <label class="block text-sm font-medium text-gray-700">乙（受注者・受け取る側）</label>
-                                <input type="text" v-model="form.contractorName" class="input-field"
+                                <input type="text" v-model="form.contractorName"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
                                     placeholder="屋号・氏名">
                             </div>
                         </div>
@@ -169,7 +172,8 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">業務内容</label>
-                                <textarea v-model="form.description" rows="3" class="input-field"
+                                <textarea v-model="form.description" rows="3"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
                                     placeholder="例: Webサイトデザイン制作一式"></textarea>
                             </div>
 
@@ -181,13 +185,15 @@
                                             class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                             <span class="text-gray-500 sm:text-sm">¥</span>
                                         </div>
-                                        <input type="number" v-model="form.amount" class="input-field pl-7"
+                                        <input type="number" v-model="form.amount"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 pl-7"
                                             placeholder="0">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700">消費税率</label>
-                                    <select v-model="form.taxRate" class="input-field">
+                                    <select v-model="form.taxRate"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
                                         <option value="0.10">10%</option>
                                         <option value="0.08">8%</option>
                                         <option value="0">0%</option>
@@ -197,19 +203,21 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">納期</label>
-                                <input type="date" v-model="form.deliveryDate" class="input-field">
+                                <input type="date" v-model="form.deliveryDate"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">納品場所・方法</label>
-                                <input type="text" v-model="form.deliveryPlace" class="input-field"
+                                <input type="text" v-model="form.deliveryPlace"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
                                     placeholder="例: メール添付にて送付">
                             </div>
 
                             <div class="bg-blue-50 p-3 rounded-md border border-blue-100">
                                 <label class="block text-sm font-bold text-blue-800">支払期日</label>
                                 <input type="date" v-model="form.paymentDate"
-                                    class="input-field border-blue-200 focus:border-blue-500">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 border-blue-200 focus:border-blue-500">
 
                                 <!-- Compliance Alert -->
                                 <div v-if="isViolationWait60"
@@ -437,6 +445,12 @@
 
                 // Action
                 const printPDF = () => {
+                    // GA4 Tracking
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'use_tool', {
+                            'tool_name': document.title.replace(' | Creators Box', '')
+                        });
+                    }
                     window.print();
                 };
 

@@ -374,6 +374,13 @@
                 };
 
                 const copyCode = () => {
+                    // GA4 Tracking
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'use_tool', {
+                            'tool_name': document.title.replace(' | Creators Box', '')
+                        });
+                    }
+
                     navigator.clipboard.writeText(generatedHtml.value).then(() => {
                         alert('HTMLコードをコピーしました');
                     });

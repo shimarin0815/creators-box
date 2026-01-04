@@ -216,6 +216,15 @@
             </p>
         </div>
     </footer>
+    <script>
+        window.addEventListener('load', function () {
+            if (typeof gtag === 'function') {
+                gtag('event', 'view_content', {
+                    'page_type': 'sitemap'
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

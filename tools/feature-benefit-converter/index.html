@@ -196,6 +196,16 @@
             const outputArea = document.getElementById('output-area');
             const placeholderMsg = document.getElementById('placeholder-msg');
 
+            // --- GA4 Event Tracking Start ---
+            btnConvert.addEventListener('click', function () {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'use_tool', {
+                        'tool_name': document.title.replace(' | Creators Box', '')
+                    });
+                }
+            });
+            // --- GA4 Event Tracking End ---
+
             // Patterns Definition
             const patterns = [
                 {

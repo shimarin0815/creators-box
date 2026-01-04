@@ -398,7 +398,17 @@
             handleFile(files[0], type);
         }
 
+        let hasTrackedUse = false;
+
         function handleFile(file, type) {
+            // GA4 Tracking (First Interaction)
+            if (!hasTrackedUse && typeof gtag === 'function') {
+                gtag('event', 'use_tool', {
+                    'tool_name': document.title.replace(' | Creators Box', '')
+                });
+                hasTrackedUse = true;
+            }
+
             if (!file || !file.type.startsWith('image/')) {
                 alert('画像ファイルを選択してください。');
                 return;
