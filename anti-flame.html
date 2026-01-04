@@ -169,7 +169,13 @@
                 <div class="mb-8">
                     <label for="inputText"
                         class="block text-sm font-bold text-gray-700 mb-2 flex justify-between items-center">
-                        診断したいテキスト
+                        <div>
+                            診断したいテキスト
+                            <button id="sampleBtn"
+                                class="ml-3 text-xs text-blue-600 underline hover:text-blue-800 transition-colors">
+                                [ サンプルを試す ]
+                            </button>
+                        </div>
                         <span class="text-xs font-normal text-gray-500" id="charCount">0文字</span>
                     </label>
                     <textarea id="inputText"
@@ -293,11 +299,22 @@
 
         const inputText = document.getElementById('inputText');
         const checkBtn = document.getElementById('checkBtn');
+        const sampleBtn = document.getElementById('sampleBtn');
         const charCount = document.getElementById('charCount');
         const resultArea = document.getElementById('resultArea');
         const summaryBox = document.getElementById('summaryBox');
         const highlightedText = document.getElementById('highlightedText');
         const detectionList = document.getElementById('detectionList');
+
+        // Sample Text Logic
+        const sampleText = "【緊急速報】このサプリは絶対痩せる！\n\n世界初の成分「ミラクルX」を配合し、なんと脂肪燃焼効果はNo.1です。\n飲んだ翌日から若返るのを実感！\n\n100%確実にシミが消え、美白効果も完璧。\n今なら「神」レベルの爆売れ中！\n奇跡のアンチエイジング体験をあなたに。\n\n※この病気が完治したという声も！";
+
+        sampleBtn.addEventListener('click', () => {
+            inputText.value = sampleText;
+            charCount.textContent = `${inputText.value.length}文字`;
+            // Trigger check automatically for instant wow factor
+            checkBtn.click();
+        });
 
         // Character Count
         inputText.addEventListener('input', () => {
