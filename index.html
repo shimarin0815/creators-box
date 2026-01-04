@@ -848,8 +848,10 @@
             // Function to apply filter
             const applyFilter = (category) => {
                 toolCards.forEach(card => {
-                    const cardCategory = card.getAttribute('data-category');
-                    if (category === 'all' || cardCategory === category) {
+                    const cardCategoryAttr = card.getAttribute('data-category') || '';
+                    const cardCategories = cardCategoryAttr.split(' ');
+
+                    if (category === 'all' || cardCategories.includes(category)) {
                         card.style.display = ''; // Reset display (show)
                         // Add fade-in animation check if needed, but display block/none is simple
                     } else {
